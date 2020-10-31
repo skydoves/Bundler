@@ -13,7 +13,8 @@
 <img src="https://user-images.githubusercontent.com/24237865/97780897-e8528d00-1bca-11eb-85d1-4d177d65327b.png" width="471" height="316"/>
 </p>
 
-## Including in your project 
+## Including in your project
+[![Download](https://api.bintray.com/packages/devmagician/maven/bundler/images/download.svg) ](https://bintray.com/devmagician/maven/bundler/_latestVersion)
 ### Gradle 
 Add below codes to your **root** `build.gradle` file (not your module build.gradle file).
 ```gradle

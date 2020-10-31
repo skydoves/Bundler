@@ -55,6 +55,13 @@ inline fun String.intent(uri: Uri, crossinline block: Bundler.() -> Unit): Inten
 }
 
 /** creates an instance of the intent with packageContext and a target class. */
+@Deprecated(
+  message = "use intentOf<T>() instead",
+  replaceWith = ReplaceWith(
+    "intentOf<T>(block)",
+    imports = ["com.skydoves.bundler.intentOf"]
+  )
+)
 @JvmSynthetic
 @InlineIntentOnly
 inline fun <reified T : Any> Context.intent(
@@ -65,6 +72,13 @@ inline fun <reified T : Any> Context.intent(
 }
 
 /** creates an instance of the intent with packageContext, a target class, an action and URI. */
+@Deprecated(
+  message = "use intentOf<T>() instead",
+  replaceWith = ReplaceWith(
+    "intentOf<T>(action, uri, block)",
+    imports = ["com.skydoves.bundler.intentOf"]
+  )
+)
 @JvmSynthetic
 @InlineIntentOnly
 inline fun <reified T : Any> Context.intent(
@@ -74,6 +88,26 @@ inline fun <reified T : Any> Context.intent(
   crossinline block: Bundler.() -> Unit
 ): Intent {
   return Bundler(Intent(action, uri, this, clazz.java)).apply(block).intent
+}
+
+/** creates an instance of the intent with packageContext and a target class. */
+@JvmSynthetic
+@InlineIntentOnly
+inline fun <reified T : Any> Context.intentOf(
+  crossinline block: Bundler.() -> Unit
+): Intent {
+  return Bundler(Intent(this, T::class.java)).apply(block).intent
+}
+
+/** creates an instance of the intent with packageContext, a target class, an action and URI. */
+@JvmSynthetic
+@InlineIntentOnly
+inline fun <reified T : Any> Context.intentOf(
+  action: String,
+  uri: Uri,
+  crossinline block: Bundler.() -> Unit
+): Intent {
+  return Bundler(Intent(action, uri, this, T::class.java)).apply(block).intent
 }
 
 /** creates a new bundle and put it into the [intent] with the given key/value pairs as elements. */

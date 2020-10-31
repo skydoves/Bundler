@@ -1,0 +1,3 @@
+include ':bundler'
+include ':app'
+rootProject.name = "Bundler"

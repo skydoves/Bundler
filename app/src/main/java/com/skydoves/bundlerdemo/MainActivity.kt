@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     val userInfo = UserInfo.create()
 
     // / start the SecondActivity with intent data.
-    intent(SecondActivity::class) {
+    intent<SecondActivity> {
       +("id" to userInfo.id)
       +("name" to userInfo.nickname)
       putExtra("poster", poster)

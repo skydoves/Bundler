@@ -58,22 +58,20 @@ inline fun String.intent(uri: Uri, crossinline block: Bundler.() -> Unit): Inten
 @JvmSynthetic
 @InlineIntentOnly
 inline fun <reified T : Any> Context.intent(
-  clazz: KClass<T>,
   crossinline block: Bundler.() -> Unit
 ): Intent {
-  return Bundler(Intent(this, clazz.java)).apply(block).intent
+  return Bundler(Intent(this, T::class.java)).apply(block).intent
 }
 
 /** creates an instance of the intent with packageContext, a target class, an action and URI. */
 @JvmSynthetic
 @InlineIntentOnly
 inline fun <reified T : Any> Context.intent(
-  clazz: KClass<T>,
   action: String,
   uri: Uri,
   crossinline block: Bundler.() -> Unit
 ): Intent {
-  return Bundler(Intent(action, uri, this, clazz.java)).apply(block).intent
+  return Bundler(Intent(action, uri, this, T::class.java)).apply(block).intent
 }
 
 /** creates a new bundle and put it into the [intent] with the given key/value pairs as elements. */

@@ -18,7 +18,7 @@ package com.skydoves.bundlerdemo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.skydoves.bundler.intent
+import com.skydoves.bundler.intentOf
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     val userInfo = UserInfo.create()
 
     // / start the SecondActivity with intent data.
-    intent<SecondActivity> {
+    intentOf<SecondActivity> {
       +("id" to userInfo.id)
       +("name" to userInfo.nickname)
       putExtra("poster", poster)

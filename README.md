@@ -9,6 +9,10 @@
 🎁 Android Intent & Bundle extensions that insert and retrieve values elegantly.
 </p>
 
+<p align="center">
+<img src="https://user-images.githubusercontent.com/24237865/97780735-be4c9b00-1bc9-11eb-8c6d-64ee1107200e.png" width="471" height="316"/>
+</p>
+
 ## Including in your project 
 ### Gradle 
 Add below codes to your **root** `build.gradle` file (not your module build.gradle file).
@@ -22,7 +26,7 @@ allprojects {
 And add a dependency code to your **module**'s `build.gradle` file.
 ```gradle
 dependencies {
-    implementation "com.github.skydoves:bndler:1.0.0"
+    implementation "com.github.skydoves:bundler:1.0.0"
 }
 ```
 

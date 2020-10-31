@@ -14,7 +14,8 @@
 </p>
 
 ## Including in your project
-[![Download](https://api.bintray.com/packages/devmagician/maven/bundler/images/download.svg) ](https://bintray.com/devmagician/maven/bundler/_latestVersion)
+[![Download](https://api.bintray.com/packages/devmagician/maven/bundler/images/download.svg) ](https://bintray.com/devmagician/maven/bundler/_latestVersion)<br>
+[![Jitpack](https://jitpack.io/v/skydoves/bundler.svg)](https://jitpack.io/#skydoves/bundler)
 ### Gradle 
 Add below codes to your **root** `build.gradle` file (not your module build.gradle file).
 ```gradle

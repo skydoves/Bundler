@@ -181,6 +181,17 @@ inline class Bundler(val intent: Intent = Intent()) {
   )
 
   /**
+   * Inserts a key/value pair as an extra element.
+   *
+   * ```
+   * key eq value
+   * ```
+   */
+  infix fun String.eq(value: Any?) = intent.putExtras(
+    com.skydoves.bundler.bundleOf(this to value)
+  )
+
+  /**
    * Removes a previous extra.
    *
    * ```

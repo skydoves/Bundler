@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("IMPLICIT_CAST_TO_ANY", "UNCHECKED_CAST", "unused")
+@file:Suppress("UNCHECKED_CAST", "unused")
 
 package com.skydoves.bundler
 

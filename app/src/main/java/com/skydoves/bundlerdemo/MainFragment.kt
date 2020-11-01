@@ -23,7 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.skydoves.bundler.bundle
-import com.skydoves.bundler.intent
+import com.skydoves.bundler.intentOf
 
 class MainFragment : Fragment() {
 
@@ -50,7 +50,7 @@ class MainFragment : Fragment() {
 
     fun create(userInfo: UserInfo, poster: Poster): MainFragment {
       return MainFragment().apply {
-        arguments = intent {
+        arguments = intentOf {
           +("id" to userInfo.id)
           +("name" to userInfo.nickname)
           +("poster" to poster)

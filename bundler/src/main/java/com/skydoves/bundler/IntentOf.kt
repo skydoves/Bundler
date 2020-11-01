@@ -33,7 +33,7 @@ internal annotation class InlineIntentOnly
  */
 @JvmSynthetic
 @InlineIntentOnly
-inline fun intent(crossinline block: Bundler.() -> Unit): Intent {
+inline fun intentOf(crossinline block: Bundler.() -> Unit): Intent {
   return Bundler().apply(block).intent
 }
 
@@ -44,7 +44,7 @@ inline fun intent(crossinline block: Bundler.() -> Unit): Intent {
  */
 @JvmSynthetic
 @InlineIntentOnly
-inline fun Intent.intent(crossinline block: Bundler.() -> Unit): Intent {
+inline fun Intent.intentOf(crossinline block: Bundler.() -> Unit): Intent {
   return Bundler(Intent(this)).apply(block).intent
 }
 
@@ -55,7 +55,7 @@ inline fun Intent.intent(crossinline block: Bundler.() -> Unit): Intent {
  */
 @JvmSynthetic
 @InlineIntentOnly
-inline fun String.intent(crossinline block: Bundler.() -> Unit): Intent {
+inline fun String.intentOf(crossinline block: Bundler.() -> Unit): Intent {
   return Bundler(Intent(this)).apply(block).intent
 }
 
@@ -67,8 +67,111 @@ inline fun String.intent(crossinline block: Bundler.() -> Unit): Intent {
  */
 @JvmSynthetic
 @InlineIntentOnly
+inline fun String.intentOf(uri: Uri, crossinline block: Bundler.() -> Unit): Intent {
+  return Bundler(Intent(this, uri)).apply(block).intent
+}
+
+/**
+ * Creates an instance of the intent with packageContext and a target class.
+ *
+ * @param block A lambda domain scope of the [Bundler].
+ */
+@JvmSynthetic
+@InlineIntentOnly
+inline fun <reified T : Any> Context.intentOf(
+  crossinline block: Bundler.() -> Unit
+): Intent {
+  return Bundler(Intent(this, T::class.java)).apply(block).intent
+}
+
+/**
+ * Creates an instance of the intent with packageContext, a target class, an action and URI.
+ *
+ * @param action The Intent action, such as ACTION_VIEW.
+ * @param uri The Intent data URI.
+ * @param block A lambda domain scope of the [Bundler].
+ */
+@JvmSynthetic
+@InlineIntentOnly
+inline fun <reified T : Any> Context.intentOf(
+  action: String,
+  uri: Uri,
+  crossinline block: Bundler.() -> Unit
+): Intent {
+  return Bundler(Intent(action, uri, this, T::class.java)).apply(block).intent
+}
+
+/**
+ * Creates an instance of the intent.
+ *
+ * @param block A lambda domain scope of the [Bundler].
+ */
+@Deprecated(
+  message = "use intentOf() instead",
+  replaceWith = ReplaceWith(
+    "intentOf(block)",
+    imports = ["com.skydoves.bundler.intentOf"]
+  )
+)
+@JvmSynthetic
+@InlineIntentOnly
+inline fun intent(crossinline block: Bundler.() -> Unit): Intent {
+  return Bundler().apply(block).intent
+}
+
+/**
+ * Creates an instance of the intent from an intent.
+ *
+ * @param block A lambda domain scope of the [Bundler].
+ */
+@Deprecated(
+  message = "use intentOf() instead",
+  replaceWith = ReplaceWith(
+    "intentOf(block)",
+    imports = ["com.skydoves.bundler.intentOf"]
+  )
+)
+@JvmSynthetic
+@InlineIntentOnly
+inline fun Intent.intent(crossinline block: Bundler.() -> Unit): Intent {
+  return Bundler(Intent(this)).apply(block).intent
+}
+
+/**
+ * Creates an instance of the intent with action and URI.
+ *
+ * @param uri The Intent data URI.
+ * @param block A lambda domain scope of the [Bundler].
+ */
+@Deprecated(
+  message = "use intentOf() instead",
+  replaceWith = ReplaceWith(
+    "intentOf(uri, block)",
+    imports = ["com.skydoves.bundler.intentOf"]
+  )
+)
+@JvmSynthetic
+@InlineIntentOnly
 inline fun String.intent(uri: Uri, crossinline block: Bundler.() -> Unit): Intent {
   return Bundler(Intent(this, uri)).apply(block).intent
+}
+
+/**
+ * Creates an instance of the intent with an action.
+ *
+ * @param block A lambda domain scope of the [Bundler].
+ */
+@Deprecated(
+  message = "use intentOf() instead",
+  replaceWith = ReplaceWith(
+    "intentOf(block)",
+    imports = ["com.skydoves.bundler.intentOf"]
+  )
+)
+@JvmSynthetic
+@InlineIntentOnly
+inline fun String.intent(crossinline block: Bundler.() -> Unit): Intent {
+  return Bundler(Intent(this)).apply(block).intent
 }
 
 /**
@@ -116,37 +219,6 @@ inline fun <reified T : Any> Context.intent(
   crossinline block: Bundler.() -> Unit
 ): Intent {
   return Bundler(Intent(action, uri, this, clazz.java)).apply(block).intent
-}
-
-/**
- * Creates an instance of the intent with packageContext and a target class.
- *
- * @param block A lambda domain scope of the [Bundler].
- */
-@JvmSynthetic
-@InlineIntentOnly
-inline fun <reified T : Any> Context.intentOf(
-  crossinline block: Bundler.() -> Unit
-): Intent {
-  return Bundler(Intent(this, T::class.java)).apply(block).intent
-}
-
-/**
- * Creates an instance of the intent with packageContext, a target class, an action and URI.
- *
- * @param clazz The component class that is to be used for the intent.
- * @param action The Intent action, such as ACTION_VIEW.
- * @param uri The Intent data URI.
- * @param block A lambda domain scope of the [Bundler].
- */
-@JvmSynthetic
-@InlineIntentOnly
-inline fun <reified T : Any> Context.intentOf(
-  action: String,
-  uri: Uri,
-  crossinline block: Bundler.() -> Unit
-): Intent {
-  return Bundler(Intent(action, uri, this, T::class.java)).apply(block).intent
 }
 
 /**

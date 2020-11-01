@@ -29,7 +29,7 @@ allprojects {
 And add a dependency code to your **module**'s `build.gradle` file.
 ```gradle
 dependencies {
-    implementation "com.github.skydoves:bundler:1.0.0"
+    implementation "com.github.skydoves:bundler:1.0.1"
 }
 ```
 
@@ -37,7 +37,7 @@ dependencies {
 ### Intent
 `intent` is an expression for creating an Intent using Kotlin DSL style and we can put extras using the `putExtra` method. Also, we can put extras using the `+` keyword in front of a key/value pair.
 ```kotlin
-val intent = intent {
+val intent = intentOf {
     putExtra("posterId", poster.id) // put a Long type 'posterId' value.
     putExtra("posterName" to poster.name) // put a String type 'posterName' value.
     putExtra("poster", poster) // put a Parcelable type 'poster' value.
@@ -49,7 +49,7 @@ val intent = intent {
 ### StartActivity
 We can start activities using the `intent` expression like below.
 ```kotlin
-intent(SecondActivity::class) {
+intentOf<SecondActivity>() {
     putExtra("id" to userInfo.id)
     putExtra("name" to userInfo.nickname)
     putExtra("poster", poster)
@@ -58,7 +58,7 @@ intent(SecondActivity::class) {
 ```
 We can also use other options for creating an intent.
 ```kotlin
-intent {
+intentOf {
     setAction(Intent.ACTION_MAIN)
     addCategory(Intent.CATEGORY_APP_MUSIC)
     setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -95,7 +95,7 @@ private val posterListArray by bundleArrayList<Poster>("posterArrayList") { arra
 ### Fragment
 The below example shows setting an argument using the `intent` expression.
 ```kotlin
-arguments = intent {
+arguments = intentOf {
     +("id" to userInfo.id)
     +("name" to userInfo.nickname)
     +("poster" to poster)

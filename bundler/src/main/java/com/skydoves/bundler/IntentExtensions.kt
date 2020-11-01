@@ -26,35 +26,56 @@ import kotlin.reflect.KClass
 @DslMarker
 internal annotation class InlineIntentOnly
 
-/** creates an instance of the intent. */
+/**
+ * Creates an instance of the intent.
+ *
+ * @param block A lambda domain scope of the [Bundler].
+ */
 @JvmSynthetic
 @InlineIntentOnly
 inline fun intent(crossinline block: Bundler.() -> Unit): Intent {
   return Bundler().apply(block).intent
 }
 
-/** creates an instance of the intent from an intent. */
+/**
+ * Creates an instance of the intent from an intent.
+ *
+ * @param block A lambda domain scope of the [Bundler].
+ */
 @JvmSynthetic
 @InlineIntentOnly
 inline fun Intent.intent(crossinline block: Bundler.() -> Unit): Intent {
   return Bundler(Intent(this)).apply(block).intent
 }
 
-/** creates an instance of the intent with an action. */
+/**
+ * Creates an instance of the intent with an action.
+ *
+ * @param block A lambda domain scope of the [Bundler].
+ */
 @JvmSynthetic
 @InlineIntentOnly
 inline fun String.intent(crossinline block: Bundler.() -> Unit): Intent {
   return Bundler(Intent(this)).apply(block).intent
 }
 
-/** creates an instance of the intent with action and URI. */
+/**
+ * Creates an instance of the intent with action and URI.
+ *
+ * @param uri The Intent data URI.
+ * @param block A lambda domain scope of the [Bundler].
+ */
 @JvmSynthetic
 @InlineIntentOnly
 inline fun String.intent(uri: Uri, crossinline block: Bundler.() -> Unit): Intent {
   return Bundler(Intent(this, uri)).apply(block).intent
 }
 
-/** creates an instance of the intent with packageContext and a target class. */
+/**
+ * Creates an instance of the intent with packageContext and a target class.
+ *
+ * @param block A lambda domain scope of the [Bundler].
+ */
 @Deprecated(
   message = "use intentOf<T>() instead",
   replaceWith = ReplaceWith(
@@ -71,7 +92,14 @@ inline fun <reified T : Any> Context.intent(
   return Bundler(Intent(this, clazz.java)).apply(block).intent
 }
 
-/** creates an instance of the intent with packageContext, a target class, an action and URI. */
+/**
+ * Creates an instance of the intent with packageContext, a target class, an action and URI.
+ *
+ * @param clazz The component class that is to be used for the intent.
+ * @param action The Intent action, such as ACTION_VIEW.
+ * @param uri The Intent data URI.
+ * @param block A lambda domain scope of the [Bundler].
+ */
 @Deprecated(
   message = "use intentOf<T>() instead",
   replaceWith = ReplaceWith(
@@ -90,7 +118,11 @@ inline fun <reified T : Any> Context.intent(
   return Bundler(Intent(action, uri, this, clazz.java)).apply(block).intent
 }
 
-/** creates an instance of the intent with packageContext and a target class. */
+/**
+ * Creates an instance of the intent with packageContext and a target class.
+ *
+ * @param block A lambda domain scope of the [Bundler].
+ */
 @JvmSynthetic
 @InlineIntentOnly
 inline fun <reified T : Any> Context.intentOf(
@@ -99,7 +131,14 @@ inline fun <reified T : Any> Context.intentOf(
   return Bundler(Intent(this, T::class.java)).apply(block).intent
 }
 
-/** creates an instance of the intent with packageContext, a target class, an action and URI. */
+/**
+ * Creates an instance of the intent with packageContext, a target class, an action and URI.
+ *
+ * @param clazz The component class that is to be used for the intent.
+ * @param action The Intent action, such as ACTION_VIEW.
+ * @param uri The Intent data URI.
+ * @param block A lambda domain scope of the [Bundler].
+ */
 @JvmSynthetic
 @InlineIntentOnly
 inline fun <reified T : Any> Context.intentOf(
@@ -110,7 +149,11 @@ inline fun <reified T : Any> Context.intentOf(
   return Bundler(Intent(action, uri, this, T::class.java)).apply(block).intent
 }
 
-/** creates a new bundle and put it into the [intent] with the given key/value pairs as elements. */
+/**
+ * Creates a new bundle and put it into the [intent] with the given key/value pairs as elements.
+ *
+ * @param pairs key/value pairs.
+ */
 @JvmSynthetic
 @InlineIntentOnly
 fun Intent.bundleOf(vararg pairs: Pair<String, Any?>) = apply {

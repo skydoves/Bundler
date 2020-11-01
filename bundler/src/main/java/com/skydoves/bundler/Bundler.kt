@@ -90,45 +90,102 @@ inline class Bundler(val intent: Intent = Intent()) {
     context.startActivity(intent)
   }
 
-  /** Launch an activity for which you would like a result when it finished. */
+  /**
+   * Launch a new activity with options.
+   *
+   * @param context A context for launching an activity.
+   * @param options Additional options for how the Activity should be started.
+   */
+  fun startActivity(context: Context, options: Bundle) {
+    context.startActivity(intent, options)
+  }
+
+  /**
+   * Launch an activity for which you would like a result when it finished.
+   *
+   * @param activity An activity for receiving the result.
+   * @param requestCode If >= 0, this code will be returned in
+   *                    onActivityResult() when the activity exits.
+   */
   fun startActivityForResult(activity: Activity, requestCode: Int) {
     activity.startActivityForResult(intent, requestCode)
   }
 
-  /** A special variation to launch an activity only if a new activity instance is needed to handle the given Intent. */
+  /**
+   * A special variation to launch an activity only if a new activity instance is needed to handle the given Intent.
+   *
+   * @param activity An activity.
+   * @param requestCode If >= 0, this code will be returned in
+   *                    onActivityResult() when the activity exits.
+   */
   fun startActivityIfNeeded(activity: Activity, requestCode: Int): Boolean {
     return activity.startActivityIfNeeded(intent, requestCode)
   }
 
-  /** Special version of starting an activity, for use when you are replacing other activity components. */
+  /**
+   * Special version of starting an activity, for use when you are replacing other activity components.
+   *
+   * @param activity An activity.
+   */
   fun startNextMatchingActivity(activity: Activity): Boolean {
     return activity.startNextMatchingActivity(intent)
   }
 
-  /** creates a new bundle and put it into the [intent] with the given key/value pairs as elements. */
+  /**
+   * Creates a new bundle and put it into the [intent] with the given key/value pairs as elements.
+   *
+   * @param pairs key/value pairs.
+   */
   @JvmSynthetic
   @InlineBundleDsl
   fun bundleOf(vararg pairs: Pair<String, Any?>) = apply {
     intent.putExtras(com.skydoves.bundler.bundleOf(*pairs))
   }
 
-  /** put a new extra data with the given key/value pairs as elements. */
+  /**
+   * Inserts a new extra data with the given key/value pairs as elements.
+   *
+   * @param pair A key/value pair. (key to value) A value that is supported type of [Bundle].
+   *
+   * ```
+   * putExtra(key to value)
+   * ```
+   */
   @InlineBundleDsl
   fun putExtra(pair: Pair<String, Any?>) = apply {
     bundleOf(pair)
   }
 
-  /** put a new extra data with the given key/value pair as an element. */
+  /**
+   * Inserts a new extra data with the given key/value pair as an element.
+   *
+   * @param key A key String
+   * @param value A value that is supported type of [Bundle].
+   *
+   * @throws IllegalArgumentException When a value is not a supported type of [Bundle].
+   */
   @InlineBundleDsl
   fun putExtra(key: String, value: Any) = apply {
     intent.putExtras(com.skydoves.bundler.bundleOf(key to value))
   }
 
-  /** put a key/value pair as an extra element. */
+  /**
+   * Inserts a key/value pair as an extra element.
+   *
+   * ```
+   * +(key to value)
+   * ```
+   */
   operator fun Pair<String, Any?>.unaryPlus() = intent.putExtras(
     com.skydoves.bundler.bundleOf(this)
   )
 
-  /** removes a previous extra. */
+  /**
+   * Removes a previous extra.
+   *
+   * ```
+   * -key
+   * ```
+   **/
   operator fun String.unaryMinus() = intent.removeExtra(this)
 }

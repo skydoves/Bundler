@@ -28,6 +28,8 @@ import java.io.Serializable
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
+ *
+ * @throws IllegalArgumentException When a value is not a supported type of [Bundle].
  */
 @JvmSynthetic
 @InlineBundleDsl
@@ -57,6 +59,8 @@ fun <T : Any> Activity.bundle(key: String, defaultValue: T): Lazy<T> =
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
+ *
+ * @throws IllegalArgumentException When a value is not a supported type of [Bundle].
  */
 @JvmSynthetic
 @InlineBundleDsl
@@ -100,6 +104,8 @@ inline fun <reified T : Any> Activity.bundle(
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
+ *
+ * @throws IllegalArgumentException When a value is not a supported type of [Bundle].
  */
 @JvmSynthetic
 @InlineBundleDsl
@@ -125,6 +131,8 @@ inline fun <reified T : Any> Activity.bundleArray(
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
+ *
+ * @throws IllegalArgumentException When a value is not a supported type of [Bundle].
  */
 @JvmSynthetic
 @InlineBundleDsl

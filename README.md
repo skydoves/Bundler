@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/24237865/97780897-e8528d00-1bca-11eb-85d1-4d177d65327b.png" width="471" height="316"/>
+<img src="https://user-images.githubusercontent.com/24237865/97801483-5b6a0b00-1c80-11eb-978b-9a73a442539d.png" width="471" height="316"/>
 </p>
 
 ## Including in your project
@@ -35,7 +35,7 @@ dependencies {
 
 ## Usage
 ### Intent
-`intent` is an expression for creating an Intent using Kotlin DSL style and we can put extras using the `putExtra` method. Also, we can put extras using the `+` keyword in front of a key/value pair.
+`intentOf` is an expression for creating an Intent using Kotlin DSL style and we can put extras using the `putExtra` method. Also, we can put extras using the `+` keyword in front of a key/value pair.
 ```kotlin
 val intent = intentOf {
     putExtra("posterId", poster.id) // put a Long type 'posterId' value.
@@ -47,7 +47,7 @@ val intent = intentOf {
 }
 ```
 ### StartActivity
-We can start activities using the `intent` expression like below.
+We can start activities using the `intentOf` expression like below.
 ```kotlin
 intentOf<SecondActivity>() {
     putExtra("id" to userInfo.id)
@@ -93,7 +93,7 @@ private val posterArray by bundleArray<Poster>("posterArray") { arrayOf() }
 private val posterListArray by bundleArrayList<Poster>("posterArrayList") { arrayListOf() }
 ```
 ### Fragment
-The below example shows setting an argument using the `intent` expression.
+The below example shows setting an argument using the `intentOf` expression.
 ```kotlin
 arguments = intentOf {
     +("id" to userInfo.id)

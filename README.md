@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/24237865/97801483-5b6a0b00-1c80-11eb-978b-9a73a442539d.png" width="471" height="316"/>
+<img src="https://user-images.githubusercontent.com/24237865/97807630-3dfb6800-1ca5-11eb-9887-3e3c51aabb95.png" width="471" height="316"/>
 </p>
 
 ## Including in your project
@@ -93,7 +93,7 @@ private val posterArray by bundleArray<Poster>("posterArray") { arrayOf() }
 private val posterListArray by bundleArrayList<Poster>("posterArrayList") { arrayListOf() }
 ```
 ### Fragment
-The below example shows setting an argument using the `intentOf` expression.
+The below example shows setting arguments using the `intentOf` expression.
 ```kotlin
 arguments = intentOf {
     +("id" to userInfo.id)

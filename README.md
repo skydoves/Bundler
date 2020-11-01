@@ -49,7 +49,7 @@ val intent = intentOf {
 ### StartActivity
 We can start activities using the `intentOf` expression like below.
 ```kotlin
-intentOf<SecondActivity>() {
+intentOf<SecondActivity> {
     putExtra("id" to userInfo.id)
     putExtra("name" to userInfo.nickname)
     putExtra("poster", poster)

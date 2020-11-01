@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     intentOf<SecondActivity> {
       +("id" to userInfo.id)
       +("name" to userInfo.nickname)
+      "nickName" eq userInfo.nickname
       putExtra("poster", poster)
       putExtra("posterArray", arrayOf(poster))
       putExtra("posterArrayList", arrayListOf(poster))

@@ -44,6 +44,8 @@ val intent = intentOf {
 
     +("id" to userInfo.id) // put a Long type 'id' value.
     +("name" to userInfo.nickname) // put a String type 'name' value.
+    
+    -"name" // remove a String type 'name' value.
 }
 ```
 ### StartActivity

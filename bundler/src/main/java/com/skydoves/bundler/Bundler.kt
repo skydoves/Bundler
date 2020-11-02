@@ -173,22 +173,22 @@ inline class Bundler(val intent: Intent = Intent()) {
    * Inserts a key/value pair as an extra element.
    *
    * ```
-   * +(key to value)
+   * key eq value
    * ```
    */
-  operator fun Pair<String, Any?>.unaryPlus() = intent.putExtras(
-    com.skydoves.bundler.bundleOf(this)
+  infix fun String.eq(value: Any?) = intent.putExtras(
+    com.skydoves.bundler.bundleOf(this to value)
   )
 
   /**
    * Inserts a key/value pair as an extra element.
    *
    * ```
-   * key eq value
+   * +(key to value)
    * ```
    */
-  infix fun String.eq(value: Any?) = intent.putExtras(
-    com.skydoves.bundler.bundleOf(this to value)
+  operator fun Pair<String, Any?>.unaryPlus() = intent.putExtras(
+    com.skydoves.bundler.bundleOf(this)
   )
 
   /**

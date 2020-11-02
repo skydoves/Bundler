@@ -48,6 +48,11 @@ tasks.withType(Javadoc) {
 
 dependencies {
     implementation "androidx.appcompat:appcompat:$versions.androidxAppcompat"
+
+    // unit test
+    testImplementation "junit:junit:$versions.junit"
+    testImplementation "androidx.test:core:$versions.androidxTest"
+    testImplementation "org.robolectric:robolectric:$versions.robolectric"
 }
 
 apply from: '../spotless.gradle'

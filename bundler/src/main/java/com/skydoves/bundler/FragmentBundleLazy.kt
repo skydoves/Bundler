@@ -72,7 +72,7 @@ inline fun <reified T : Any> Fragment.bundle(
     when {
       // references
       Bundle::class.java.isAssignableFrom(objectType) -> arguments?.getBundle(key) as? T
-      CharSequence::class.java.isAssignableFrom(objectType) -> arguments?.getChar(key) as? T
+      CharSequence::class.java.isAssignableFrom(objectType) -> arguments?.getCharSequence(key) as? T
       Parcelable::class.java.isAssignableFrom(objectType) -> arguments?.getParcelable<Parcelable>(
         key
       ) as? T

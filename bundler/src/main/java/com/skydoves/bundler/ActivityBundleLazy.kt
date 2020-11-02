@@ -73,7 +73,7 @@ inline fun <reified T : Any> Activity.bundle(
     when {
       // references
       Bundle::class.java.isAssignableFrom(objectType) -> intent.getBundleExtra(key) as? T
-      CharSequence::class.java.isAssignableFrom(objectType) -> intent.getCharArrayExtra(key) as? T
+      CharSequence::class.java.isAssignableFrom(objectType) -> intent.getCharSequenceExtra(key) as? T
       Parcelable::class.java.isAssignableFrom(objectType) -> intent.getParcelableExtra<Parcelable>(
         key
       ) as? T

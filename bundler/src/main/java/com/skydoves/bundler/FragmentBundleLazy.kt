@@ -35,23 +35,21 @@ import java.io.Serializable
 @InlineBundleDsl
 fun <T : Any> Fragment.bundle(key: String, defaultValue: T): Lazy<T> =
   lazy {
-    requireNotNull(
-      when (val value: T = defaultValue) {
-        is Boolean -> arguments?.getBoolean(key, value)
-        is Byte -> arguments?.getByte(key, value)
-        is Char -> arguments?.getChar(key, value)
-        is Double -> arguments?.getDouble(key, value)
-        is Float -> arguments?.getFloat(key, value)
-        is Int -> arguments?.getInt(key, value)
-        is Long -> arguments?.getLong(key, value)
-        is Short -> arguments?.getShort(key, value)
-        is CharSequence -> arguments?.getString(key)
+    when (defaultValue) {
+      is Boolean -> arguments?.getBoolean(key, defaultValue)
+      is Byte -> arguments?.getByte(key, defaultValue)
+      is Char -> arguments?.getChar(key, defaultValue)
+      is Double -> arguments?.getDouble(key, defaultValue)
+      is Float -> arguments?.getFloat(key, defaultValue)
+      is Int -> arguments?.getInt(key, defaultValue)
+      is Long -> arguments?.getLong(key, defaultValue)
+      is Short -> arguments?.getShort(key, defaultValue)
+      is CharSequence -> arguments?.getString(key)
 
-        else -> IllegalArgumentException(
-          "Illegal value type ${defaultValue.javaClass} for key \"$key\""
-        )
-      } as? T ?: defaultValue
-    )
+      else -> throw IllegalArgumentException(
+        "Illegal value type ${defaultValue.javaClass} for key \"$key\""
+      )
+    } as? T ?: defaultValue
   }
 
 /**

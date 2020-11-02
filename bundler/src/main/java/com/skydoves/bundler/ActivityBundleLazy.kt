@@ -33,26 +33,25 @@ import java.io.Serializable
  */
 @JvmSynthetic
 @InlineBundleDsl
-fun <T : Any> Activity.bundle(key: String, defaultValue: T): Lazy<T> =
-  lazy {
-    requireNotNull(
-      when (val value: T = defaultValue) {
-        is Boolean -> intent.getBooleanExtra(key, value)
-        is Byte -> intent.getByteExtra(key, value)
-        is Char -> intent.getCharExtra(key, value)
-        is Double -> intent.getDoubleExtra(key, value)
-        is Float -> intent.getFloatExtra(key, value)
-        is Int -> intent.getIntExtra(key, value)
-        is Long -> intent.getLongExtra(key, value)
-        is Short -> intent.getShortExtra(key, value)
-        is CharSequence -> intent.getStringExtra(key) ?: defaultValue
+inline fun <reified T : Any> Activity.bundle(key: String, defaultValue: T): Lazy<T> {
+  return lazy {
+    when (defaultValue) {
+      is Boolean -> intent.getBooleanExtra(key, defaultValue)
+      is Byte -> intent.getByteExtra(key, defaultValue)
+      is Char -> intent.getCharExtra(key, defaultValue)
+      is Double -> intent.getDoubleExtra(key, defaultValue)
+      is Float -> intent.getFloatExtra(key, defaultValue)
+      is Int -> intent.getIntExtra(key, defaultValue)
+      is Long -> intent.getLongExtra(key, defaultValue)
+      is Short -> intent.getShortExtra(key, defaultValue)
+      is CharSequence -> intent.getStringExtra(key)
 
-        else -> IllegalArgumentException(
-          "Illegal value type ${defaultValue.javaClass} for key \"$key\""
-        )
-      } as T
-    )
+      else -> throw IllegalArgumentException(
+        "Illegal value type ${defaultValue.javaClass} for key \"$key\""
+      )
+    } as? T ?: defaultValue
   }
+}
 
 /**
  * Retrieves a references type of extended data from intent lazily.

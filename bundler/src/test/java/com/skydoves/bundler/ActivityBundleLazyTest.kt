@@ -17,7 +17,10 @@
 package com.skydoves.bundler
 
 import android.content.Intent
+import android.os.Bundle
 import com.skydoves.bundler.data.Poster
+import com.skydoves.bundler.data.PosterSerializable
+import com.skydoves.bundler.data.UserInfo
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
 import org.junit.Test
@@ -115,5 +118,108 @@ class ActivityBundleLazyTest {
 
     val poster: Poster by activity.bundle("poster", mock)
     poster.id
+  }
+
+  @Test
+  fun bundleReferenceLazyTest() {
+    val activity = TestActivity()
+    activity.intent = Intent().apply {
+      val poster = Poster.create()
+      val serializablePoster = PosterSerializable.create()
+
+      putExtra("bundle", Bundle().apply { putString("bundleString", "skydoves") })
+      putExtra("charSequence", "skydoves")
+      putExtra("parcelable", poster)
+      putExtra("serializable", serializablePoster)
+      putExtra("booleanArray", booleanArrayOf(true, false, true))
+      putExtra("byteArray", byteArrayOf(0.toByte(), 1.toByte(), 2.toByte()))
+      putExtra("doubleArray", doubleArrayOf(0.0, 1.0, 2.0))
+      putExtra("floatArray", floatArrayOf(0f, 1f, 2f))
+      putExtra("intArray", intArrayOf(0, 1, 2))
+      putExtra("longArray", longArrayOf(0L, 1L, 2L))
+      putExtra("shortArray", shortArrayOf(0, 1, 2))
+    }
+
+    val bundle: Bundle? by activity.bundle("bundle")
+    assertThat(bundle?.getString("bundleString"), `is`("skydoves"))
+
+    val charSequence: CharSequence? by activity.bundle("charSequence")
+    assertThat(charSequence, `is`("skydoves"))
+
+    val parcelable: Poster? by activity.bundle("parcelable")
+    assertThat(parcelable, `is`(Poster.create()))
+
+    val serializable: PosterSerializable? by activity.bundle("serializable")
+    assertThat(serializable, `is`(PosterSerializable.create()))
+
+    val booleanArray: BooleanArray? by activity.bundle("booleanArray")
+    assertThat(booleanArray, `is`(booleanArrayOf(true, false, true)))
+
+    val byteArray: ByteArray? by activity.bundle("byteArray")
+    assertThat(byteArray, `is`(byteArrayOf(0.toByte(), 1.toByte(), 2.toByte())))
+
+    val doubleArray: DoubleArray? by activity.bundle("doubleArray")
+    assertThat(doubleArray, `is`(doubleArrayOf(0.0, 1.0, 2.0)))
+
+    val floatArray: FloatArray? by activity.bundle("floatArray")
+    assertThat(floatArray, `is`(floatArrayOf(0f, 1f, 2f)))
+
+    val intArray: IntArray? by activity.bundle("intArray")
+    assertThat(intArray, `is`(intArrayOf(0, 1, 2)))
+
+    val longArray: LongArray? by activity.bundle("longArray")
+    assertThat(longArray, `is`(longArrayOf(0L, 1L, 2L)))
+
+    val shortArray: ShortArray? by activity.bundle("shortArray")
+    assertThat(shortArray, `is`(shortArrayOf(0, 1, 2)))
+  }
+
+  @Test
+  fun bundleReferenceLazyDefaultValueTest() {
+    val activity = TestActivity()
+    activity.intent = Intent()
+    val poster = Poster.create()
+    val serializablePoster = PosterSerializable.create()
+
+    val bundle: Bundle? by activity.bundle("bundle") { Bundle().apply { putString("bundleString", "skydoves") } }
+    assertThat(bundle?.getString("bundleString"), `is`("skydoves"))
+
+    val charSequence: CharSequence? by activity.bundle("charSequence") { "skydoves" }
+    assertThat(charSequence, `is`("skydoves"))
+
+    val parcelable: Poster? by activity.bundle("parcelable") { poster }
+    assertThat(parcelable, `is`(Poster.create()))
+
+    val serializable: PosterSerializable? by activity.bundle("serializable") { serializablePoster }
+    assertThat(serializable, `is`(PosterSerializable.create()))
+
+    val booleanArray: BooleanArray? by activity.bundle("booleanArray") { booleanArrayOf(true, false, true) }
+    assertThat(booleanArray, `is`(booleanArrayOf(true, false, true)))
+
+    val byteArray: ByteArray? by activity.bundle("byteArray") { byteArrayOf(0.toByte(), 1.toByte(), 2.toByte()) }
+    assertThat(byteArray, `is`(byteArrayOf(0.toByte(), 1.toByte(), 2.toByte())))
+
+    val doubleArray: DoubleArray? by activity.bundle("doubleArray") { doubleArrayOf(0.0, 1.0, 2.0) }
+    assertThat(doubleArray, `is`(doubleArrayOf(0.0, 1.0, 2.0)))
+
+    val floatArray: FloatArray? by activity.bundle("floatArray") { floatArrayOf(0f, 1f, 2f) }
+    assertThat(floatArray, `is`(floatArrayOf(0f, 1f, 2f)))
+
+    val intArray: IntArray? by activity.bundle("intArray") { intArrayOf(0, 1, 2) }
+    assertThat(intArray, `is`(intArrayOf(0, 1, 2)))
+
+    val longArray: LongArray? by activity.bundle("longArray") { longArrayOf(0L, 1L, 2L) }
+    assertThat(longArray, `is`(longArrayOf(0L, 1L, 2L)))
+
+    val shortArray: ShortArray? by activity.bundle("shortArray") { shortArrayOf(0, 1, 2) }
+    assertThat(shortArray, `is`(shortArrayOf(0, 1, 2)))
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun bundleReferenceLazyWrongTypeExceptionTest() {
+    val activity = TestActivity()
+
+    val userInfo: UserInfo? by activity.bundle("userInfo") { UserInfo.create() }
+    userInfo?.nickname
   }
 }

@@ -34,7 +34,7 @@ import java.io.Serializable
 @JvmSynthetic
 @InlineBundleDsl
 inline fun <reified T : Any> Activity.bundle(key: String, defaultValue: T): Lazy<T> {
-  return lazy(LazyThreadSafetyMode.NONE) {
+  return activityVariableBundler(defaultValue) {
     when (defaultValue) {
       is Boolean -> intent.getBooleanExtra(key, defaultValue)
       is Byte -> intent.getByteExtra(key, defaultValue)
@@ -49,7 +49,7 @@ inline fun <reified T : Any> Activity.bundle(key: String, defaultValue: T): Lazy
       else -> throw IllegalArgumentException(
         "Illegal value type ${defaultValue.javaClass} for key \"$key\""
       )
-    } as? T ?: defaultValue
+    } as? T
   }
 }
 
@@ -68,7 +68,7 @@ inline fun <reified T : Any> Activity.bundle(
   crossinline defaultValue: () -> T? = { null }
 ): Lazy<T?> {
   val objectType = T::class.javaObjectType
-  return lazy(LazyThreadSafetyMode.NONE) {
+  return activityTypedBundler(defaultValue) {
     @Suppress("UNCHECKED_CAST")
     when {
       // references
@@ -94,7 +94,7 @@ inline fun <reified T : Any> Activity.bundle(
       ShortArray::class.java.isAssignableFrom(objectType) -> intent.getShortArrayExtra(key) as? T
 
       else -> throw IllegalArgumentException("Illegal value type $objectType for key \"$key\"")
-    } ?: defaultValue()
+    }
   }
 }
 
@@ -113,7 +113,7 @@ inline fun <reified T : Any> Activity.bundleArray(
   crossinline defaultValue: () -> Array<T>? = { null }
 ): Lazy<Array<*>?> {
   val javaObjectType = T::class.javaObjectType
-  return lazy(LazyThreadSafetyMode.NONE) {
+  return activityArrayBundler(defaultValue) {
     @Suppress("UNCHECKED_CAST")
     when {
       String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayExtra(key)
@@ -121,7 +121,7 @@ inline fun <reified T : Any> Activity.bundleArray(
       Parcelable::class.java.isAssignableFrom(javaObjectType) -> intent.getParcelableArrayExtra(key)
 
       else -> throw IllegalArgumentException("Illegal value type $javaObjectType for key \"$key\"")
-    } ?: defaultValue()
+    }
   }
 }
 
@@ -140,7 +140,7 @@ inline fun <reified T : Any> Activity.bundleArrayList(
   crossinline defaultValue: () -> ArrayList<T>? = { null }
 ): Lazy<ArrayList<*>?> {
   val javaObjectType = T::class.javaObjectType
-  return lazy(LazyThreadSafetyMode.NONE) {
+  return activityArrayListBundler(defaultValue) {
     @Suppress("UNCHECKED_CAST")
     when {
       String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayListExtra(key)
@@ -152,6 +152,6 @@ inline fun <reified T : Any> Activity.bundleArrayList(
       ) -> intent.getParcelableArrayListExtra<Parcelable>(key)
 
       else -> throw IllegalArgumentException("Illegal value type $javaObjectType for key \"$key\"")
-    } ?: defaultValue()
+    }
   }
 }

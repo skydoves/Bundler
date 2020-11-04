@@ -218,6 +218,7 @@ class ActivityBundleLazyTest {
   @Test(expected = IllegalArgumentException::class)
   fun bundleReferenceLazyWrongTypeExceptionTest() {
     val activity = TestActivity()
+    activity.intent = Intent()
 
     val userInfo: UserInfo? by activity.bundle("userInfo") { UserInfo.create() }
     userInfo?.nickname

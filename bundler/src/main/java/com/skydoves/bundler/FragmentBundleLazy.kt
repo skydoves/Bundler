@@ -34,7 +34,7 @@ import java.io.Serializable
 @JvmSynthetic
 @InlineBundleDsl
 fun <T : Any> Fragment.bundle(key: String, defaultValue: T): Lazy<T> =
-  lazy {
+  lazy(LazyThreadSafetyMode.NONE) {
     when (defaultValue) {
       is Boolean -> arguments?.getBoolean(key, defaultValue)
       is Byte -> arguments?.getByte(key, defaultValue)
@@ -67,7 +67,7 @@ inline fun <reified T : Any> Fragment.bundle(
   crossinline defaultValue: () -> T? = { null }
 ): Lazy<T?> {
   val objectType = T::class.javaObjectType
-  return lazy {
+  return lazy(LazyThreadSafetyMode.NONE) {
     @Suppress("UNCHECKED_CAST")
     when {
       // references
@@ -108,7 +108,7 @@ inline fun <reified T : Any> Fragment.bundleArray(
   crossinline defaultValue: () -> Array<T>? = { null }
 ): Lazy<Array<*>?> {
   val javaObjectType = T::class.javaObjectType
-  return lazy {
+  return lazy(LazyThreadSafetyMode.NONE) {
     @Suppress("UNCHECKED_CAST")
     when {
       String::class.java.isAssignableFrom(javaObjectType) -> arguments?.getStringArray(key)
@@ -135,7 +135,7 @@ inline fun <reified T : Any> Fragment.bundleArrayList(
   crossinline defaultValue: () -> ArrayList<T>? = { null }
 ): Lazy<ArrayList<*>?> {
   val javaObjectType = T::class.javaObjectType
-  return lazy {
+  return lazy(LazyThreadSafetyMode.NONE) {
     @Suppress("UNCHECKED_CAST")
     when {
       String::class.java.isAssignableFrom(javaObjectType) -> arguments?.getStringArrayList(key)

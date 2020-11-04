@@ -34,7 +34,7 @@ import java.io.Serializable
 @JvmSynthetic
 @InlineBundleDsl
 inline fun <reified T : Any> Activity.bundle(key: String, defaultValue: T): Lazy<T> {
-  return lazy {
+  return lazy(LazyThreadSafetyMode.NONE) {
     when (defaultValue) {
       is Boolean -> intent.getBooleanExtra(key, defaultValue)
       is Byte -> intent.getByteExtra(key, defaultValue)
@@ -68,7 +68,7 @@ inline fun <reified T : Any> Activity.bundle(
   crossinline defaultValue: () -> T? = { null }
 ): Lazy<T?> {
   val objectType = T::class.javaObjectType
-  return lazy {
+  return lazy(LazyThreadSafetyMode.NONE) {
     @Suppress("UNCHECKED_CAST")
     when {
       // references
@@ -113,7 +113,7 @@ inline fun <reified T : Any> Activity.bundleArray(
   crossinline defaultValue: () -> Array<T>? = { null }
 ): Lazy<Array<*>?> {
   val javaObjectType = T::class.javaObjectType
-  return lazy {
+  return lazy(LazyThreadSafetyMode.NONE) {
     @Suppress("UNCHECKED_CAST")
     when {
       String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayExtra(key)
@@ -140,7 +140,7 @@ inline fun <reified T : Any> Activity.bundleArrayList(
   crossinline defaultValue: () -> ArrayList<T>? = { null }
 ): Lazy<ArrayList<*>?> {
   val javaObjectType = T::class.javaObjectType
-  return lazy {
+  return lazy(LazyThreadSafetyMode.NONE) {
     @Suppress("UNCHECKED_CAST")
     when {
       String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayListExtra(key)

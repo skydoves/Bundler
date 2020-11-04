@@ -69,7 +69,6 @@ inline fun <reified T : Any> Fragment.bundle(
 ): Lazy<T?> {
   val objectType = T::class.javaObjectType
   return fragmentTypedBundler(defaultValue) {
-    @Suppress("UNCHECKED_CAST")
     when {
       // references
       Bundle::class.java.isAssignableFrom(objectType) -> intent.getBundleExtra(key) as? T
@@ -114,7 +113,6 @@ inline fun <reified T : Any> Fragment.bundleArray(
 ): Lazy<Array<*>?> {
   val javaObjectType = T::class.javaObjectType
   return fragmentArrayBundler(defaultValue) {
-    @Suppress("UNCHECKED_CAST")
     when {
       String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayExtra(key)
       CharSequence::class.java.isAssignableFrom(javaObjectType) -> intent.getCharSequenceArrayExtra(key)
@@ -141,7 +139,6 @@ inline fun <reified T : Any> Fragment.bundleArrayList(
 ): Lazy<ArrayList<*>?> {
   val javaObjectType = T::class.javaObjectType
   return fragmentArrayListBundler(defaultValue) {
-    @Suppress("UNCHECKED_CAST")
     when {
       String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayListExtra(key)
       CharSequence::class.java.isAssignableFrom(

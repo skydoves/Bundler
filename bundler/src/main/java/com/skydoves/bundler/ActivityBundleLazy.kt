@@ -69,7 +69,6 @@ inline fun <reified T : Any> Activity.bundle(
 ): Lazy<T?> {
   val objectType = T::class.javaObjectType
   return activityTypedBundler(defaultValue) {
-    @Suppress("UNCHECKED_CAST")
     when {
       // references
       Bundle::class.java.isAssignableFrom(objectType) -> intent.getBundleExtra(key) as? T
@@ -114,7 +113,6 @@ inline fun <reified T : Any> Activity.bundleArray(
 ): Lazy<Array<*>?> {
   val javaObjectType = T::class.javaObjectType
   return activityArrayBundler(defaultValue) {
-    @Suppress("UNCHECKED_CAST")
     when {
       String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayExtra(key)
       CharSequence::class.java.isAssignableFrom(javaObjectType) -> intent.getCharSequenceArrayExtra(key)
@@ -141,7 +139,6 @@ inline fun <reified T : Any> Activity.bundleArrayList(
 ): Lazy<ArrayList<*>?> {
   val javaObjectType = T::class.javaObjectType
   return activityArrayListBundler(defaultValue) {
-    @Suppress("UNCHECKED_CAST")
     when {
       String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayListExtra(key)
       CharSequence::class.java.isAssignableFrom(

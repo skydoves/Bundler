@@ -219,4 +219,59 @@ class FragmentBundleLazyTest {
     val userInfo: UserInfo? by fragment.bundle("userInfo") { UserInfo.create() }
     userInfo?.nickname
   }
+
+  @Test
+  fun bundleArrayLazyTest() {
+    val fragment = TestFragment()
+    val poster = Poster.create()
+    fragment.arguments = intentOf {
+      putExtra("stringArray", arrayOf("skydoves0", "skydoves1", "skydoves2"))
+      putExtra("charSequenceArray", arrayOf("skydoves0", "skydoves1", "skydoves2"))
+      putExtra("parcelableArray", arrayOf(poster, poster, poster))
+    }.extras
+
+    val stringArray by fragment.bundleArray<String>("stringArray")
+    assertThat(stringArray?.size, `is`(3))
+    assertThat(stringArray?.get(0), `is`("skydoves0"))
+
+    val charSequenceArray by fragment.bundleArray<String>("charSequenceArray")
+    assertThat(charSequenceArray?.size, `is`(3))
+    assertThat(charSequenceArray?.get(0), `is`("skydoves0"))
+
+    val parcelableArray by fragment.bundleArray<Poster>("parcelableArray")
+    assertThat(parcelableArray?.size, `is`(3))
+    assertThat(parcelableArray?.get(0), `is`(poster))
+  }
+
+  @Test
+  fun bundleArrayLazyDefaultValueTest() {
+    val fragment = TestFragment()
+    val poster = Poster.create()
+
+    val stringArray by fragment.bundleArray("stringArray") {
+      arrayOf("skydoves0", "skydoves1", "skydoves2")
+    }
+    assertThat(stringArray?.size, `is`(3))
+    assertThat(stringArray?.get(0), `is`("skydoves0"))
+
+    val charSequenceArray by fragment.bundleArray("charSequenceArray") {
+      arrayOf("skydoves0", "skydoves1", "skydoves2")
+    }
+    assertThat(charSequenceArray?.size, `is`(3))
+    assertThat(charSequenceArray?.get(0), `is`("skydoves0"))
+
+    val parcelableArray by fragment.bundleArray("parcelableArray") {
+      arrayOf(poster, poster, poster)
+    }
+    assertThat(parcelableArray?.size, `is`(3))
+    assertThat(parcelableArray?.get(0), `is`(poster))
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun bundleArrayLazyWrongTypeExceptionTest() {
+    val fragment = TestFragment()
+
+    val userInfo by fragment.bundleArray("userInfo") { arrayOf(UserInfo.create()) }
+    userInfo?.get(0)
+  }
 }

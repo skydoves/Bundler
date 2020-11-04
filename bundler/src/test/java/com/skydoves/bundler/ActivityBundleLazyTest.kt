@@ -223,4 +223,61 @@ class ActivityBundleLazyTest {
     val userInfo: UserInfo? by activity.bundle("userInfo") { UserInfo.create() }
     userInfo?.nickname
   }
+
+  @Test
+  fun bundleArrayLazyTest() {
+    val activity = TestActivity()
+    val poster = Poster.create()
+    activity.intent = Intent().apply {
+      putExtra("stringArray", arrayOf("skydoves0", "skydoves1", "skydoves2"))
+      putExtra("charSequenceArray", arrayOf("skydoves0", "skydoves1", "skydoves2"))
+      putExtra("parcelableArray", arrayOf(poster, poster, poster))
+    }
+
+    val stringArray by activity.bundleArray<String>("stringArray")
+    assertThat(stringArray?.size, `is`(3))
+    assertThat(stringArray?.get(0), `is`("skydoves0"))
+
+    val charSequenceArray by activity.bundleArray<String>("charSequenceArray")
+    assertThat(charSequenceArray?.size, `is`(3))
+    assertThat(charSequenceArray?.get(0), `is`("skydoves0"))
+
+    val parcelableArray by activity.bundleArray<Poster>("parcelableArray")
+    assertThat(parcelableArray?.size, `is`(3))
+    assertThat(parcelableArray?.get(0), `is`(poster))
+  }
+
+  @Test
+  fun bundleArrayLazyDefaultValueTest() {
+    val activity = TestActivity()
+    activity.intent = Intent()
+    val poster = Poster.create()
+
+    val stringArray by activity.bundleArray("stringArray") {
+      arrayOf("skydoves0", "skydoves1", "skydoves2")
+    }
+    assertThat(stringArray?.size, `is`(3))
+    assertThat(stringArray?.get(0), `is`("skydoves0"))
+
+    val charSequenceArray by activity.bundleArray("charSequenceArray") {
+      arrayOf("skydoves0", "skydoves1", "skydoves2")
+    }
+    assertThat(charSequenceArray?.size, `is`(3))
+    assertThat(charSequenceArray?.get(0), `is`("skydoves0"))
+
+    val parcelableArray by activity.bundleArray("parcelableArray") {
+      arrayOf(poster, poster, poster)
+    }
+    assertThat(parcelableArray?.size, `is`(3))
+    assertThat(parcelableArray?.get(0), `is`(poster))
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun bundleArrayLazyWrongTypeExceptionTest() {
+    val activity = TestActivity()
+    activity.intent = Intent()
+
+    val userInfo by activity.bundleArray("userInfo") { arrayOf(UserInfo.create()) }
+    userInfo?.get(0)
+  }
 }

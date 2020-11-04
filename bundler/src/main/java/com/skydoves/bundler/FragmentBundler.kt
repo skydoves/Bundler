@@ -16,14 +16,12 @@
 
 package com.skydoves.bundler
 
-import android.app.Activity
+import androidx.fragment.app.Fragment
 
 /**
  * Returns an instance of a bundler that has the intent of an Activity.
- *
- * @throws NullPointerException when the Activity does not contain any intent.
  */
-fun Activity.activityBundler(): Bundler = Bundler(intent)
+fun Fragment.fragmentBundler(): Bundler = Bundler().replaceExtras(arguments)
 
 /**
  * Retrieves a primitive type of extended data from intent lazily.
@@ -33,58 +31,58 @@ fun Activity.activityBundler(): Bundler = Bundler(intent)
  */
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Activity.activityVariableBundler(
+inline fun <reified T : Any> Fragment.fragmentVariableBundler(
   defaultValue: T,
   crossinline initializer: Bundler.() -> T?
 ): Lazy<T> =
   lazy(LazyThreadSafetyMode.NONE) {
-    activityBundler().initializer() ?: defaultValue
+    fragmentBundler().initializer() ?: defaultValue
   }
 
 /**
- * Retrieves a references type of extended data from intent lazily.
+ * Retrieves a primitive type of extended data from intent lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
  */
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Activity.activityTypedBundler(
+inline fun <reified T : Any> Fragment.fragmentTypedBundler(
   crossinline defaultValue: () -> T? = { null },
   crossinline initializer: Bundler.() -> T?
 ): Lazy<T?> =
   lazy(LazyThreadSafetyMode.NONE) {
-    activityBundler().initializer() ?: defaultValue()
+    fragmentBundler().initializer() ?: defaultValue()
   }
 
 /**
- * Retrieves a references array type of extended data from intent lazily.
+ * Retrieves a primitive type of extended data from intent lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
  */
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Activity.activityArrayBundler(
+inline fun <reified T : Any> Fragment.fragmentArrayBundler(
   crossinline defaultValue: () -> Array<T>? = { null },
   crossinline initializer: Bundler.() -> Array<*>?
 ): Lazy<Array<*>?> =
   lazy(LazyThreadSafetyMode.NONE) {
-    activityBundler().initializer() ?: defaultValue()
+    fragmentBundler().initializer() ?: defaultValue()
   }
 
 /**
- * Retrieves a references array list type of extended data from intent lazily.
+ * Retrieves a primitive type of extended data from intent lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
  */
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Activity.activityArrayListBundler(
+inline fun <reified T : Any> Fragment.fragmentArrayListBundler(
   crossinline defaultValue: () -> ArrayList<T>? = { null },
   crossinline initializer: Bundler.() -> ArrayList<*>?
 ): Lazy<ArrayList<*>?> =
   lazy(LazyThreadSafetyMode.NONE) {
-    activityBundler().initializer() ?: defaultValue()
+    fragmentBundler().initializer() ?: defaultValue()
   }

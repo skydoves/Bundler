@@ -24,7 +24,7 @@ import androidx.fragment.app.Fragment
 import java.io.Serializable
 
 /**
- * Retrieves a primitive type of extended data from intent lazily.
+ * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -33,27 +33,28 @@ import java.io.Serializable
  */
 @JvmSynthetic
 @InlineBundleDsl
-fun <T : Any> Fragment.bundle(key: String, defaultValue: T): Lazy<T> =
-  lazy(LazyThreadSafetyMode.NONE) {
+inline fun <reified T : Any> Fragment.bundle(key: String, defaultValue: T): Lazy<T> {
+  return fragmentVariableBundler(defaultValue) {
     when (defaultValue) {
-      is Boolean -> arguments?.getBoolean(key, defaultValue)
-      is Byte -> arguments?.getByte(key, defaultValue)
-      is Char -> arguments?.getChar(key, defaultValue)
-      is Double -> arguments?.getDouble(key, defaultValue)
-      is Float -> arguments?.getFloat(key, defaultValue)
-      is Int -> arguments?.getInt(key, defaultValue)
-      is Long -> arguments?.getLong(key, defaultValue)
-      is Short -> arguments?.getShort(key, defaultValue)
-      is CharSequence -> arguments?.getString(key)
+      is Boolean -> intent.getBooleanExtra(key, defaultValue)
+      is Byte -> intent.getByteExtra(key, defaultValue)
+      is Char -> intent.getCharExtra(key, defaultValue)
+      is Double -> intent.getDoubleExtra(key, defaultValue)
+      is Float -> intent.getFloatExtra(key, defaultValue)
+      is Int -> intent.getIntExtra(key, defaultValue)
+      is Long -> intent.getLongExtra(key, defaultValue)
+      is Short -> intent.getShortExtra(key, defaultValue)
+      is CharSequence -> intent.getStringExtra(key)
 
       else -> throw IllegalArgumentException(
         "Illegal value type ${defaultValue.javaClass} for key \"$key\""
       )
-    } as? T ?: defaultValue
+    } as? T
   }
+}
 
 /**
- * Retrieves a references type of extended data from intent lazily.
+ * Retrieves a references type of extended data from arguments lazily.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -67,34 +68,38 @@ inline fun <reified T : Any> Fragment.bundle(
   crossinline defaultValue: () -> T? = { null }
 ): Lazy<T?> {
   val objectType = T::class.javaObjectType
-  return lazy(LazyThreadSafetyMode.NONE) {
+  return fragmentTypedBundler(defaultValue) {
     @Suppress("UNCHECKED_CAST")
     when {
       // references
-      Bundle::class.java.isAssignableFrom(objectType) -> arguments?.getBundle(key) as? T
-      CharSequence::class.java.isAssignableFrom(objectType) -> arguments?.getCharSequence(key) as? T
-      Parcelable::class.java.isAssignableFrom(objectType) -> arguments?.getParcelable<Parcelable>(
+      Bundle::class.java.isAssignableFrom(objectType) -> intent.getBundleExtra(key) as? T
+      CharSequence::class.java.isAssignableFrom(objectType) -> intent.getCharSequenceExtra(key) as? T
+      Parcelable::class.java.isAssignableFrom(objectType) -> intent.getParcelableExtra<Parcelable>(
         key
       ) as? T
-      Serializable::class.java.isAssignableFrom(objectType) -> arguments?.getSerializable(key) as? T
+      Serializable::class.java.isAssignableFrom(objectType) -> intent.getSerializableExtra(
+        key
+      ) as? T
 
       // scalar arrays
-      BooleanArray::class.java.isAssignableFrom(objectType) -> arguments?.getBooleanArray(key) as? T
-      ByteArray::class.java.isAssignableFrom(objectType) -> arguments?.getByteArray(key) as? T
-      CharArray::class.java.isAssignableFrom(objectType) -> arguments?.getCharArray(key) as? T
-      DoubleArray::class.java.isAssignableFrom(objectType) -> arguments?.getDoubleArray(key) as? T
-      FloatArray::class.java.isAssignableFrom(objectType) -> arguments?.getFloatArray(key) as? T
-      IntArray::class.java.isAssignableFrom(objectType) -> arguments?.getIntArray(key) as? T
-      LongArray::class.java.isAssignableFrom(objectType) -> arguments?.getLongArray(key) as? T
-      ShortArray::class.java.isAssignableFrom(objectType) -> arguments?.getShortArray(key) as? T
+      BooleanArray::class.java.isAssignableFrom(objectType) -> intent.getBooleanArrayExtra(
+        key
+      ) as? T
+      ByteArray::class.java.isAssignableFrom(objectType) -> intent.getByteArrayExtra(key) as? T
+      CharArray::class.java.isAssignableFrom(objectType) -> intent.getCharArrayExtra(key) as? T
+      DoubleArray::class.java.isAssignableFrom(objectType) -> intent.getDoubleArrayExtra(key) as? T
+      FloatArray::class.java.isAssignableFrom(objectType) -> intent.getFloatArrayExtra(key) as? T
+      IntArray::class.java.isAssignableFrom(objectType) -> intent.getIntArrayExtra(key) as? T
+      LongArray::class.java.isAssignableFrom(objectType) -> intent.getLongArrayExtra(key) as? T
+      ShortArray::class.java.isAssignableFrom(objectType) -> intent.getShortArrayExtra(key) as? T
 
       else -> throw IllegalArgumentException("Illegal value type $objectType for key \"$key\"")
-    } ?: defaultValue()
+    }
   }
 }
 
 /**
- * Retrieves a references array type of extended data from intent lazily.
+ * Retrieves a references array type of extended data from arguments lazily.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -108,20 +113,20 @@ inline fun <reified T : Any> Fragment.bundleArray(
   crossinline defaultValue: () -> Array<T>? = { null }
 ): Lazy<Array<*>?> {
   val javaObjectType = T::class.javaObjectType
-  return lazy(LazyThreadSafetyMode.NONE) {
+  return fragmentArrayBundler(defaultValue) {
     @Suppress("UNCHECKED_CAST")
     when {
-      String::class.java.isAssignableFrom(javaObjectType) -> arguments?.getStringArray(key)
-      CharSequence::class.java.isAssignableFrom(javaObjectType) -> arguments?.getCharSequenceArray(key)
-      Parcelable::class.java.isAssignableFrom(javaObjectType) -> arguments?.getParcelableArray(key)
+      String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayExtra(key)
+      CharSequence::class.java.isAssignableFrom(javaObjectType) -> intent.getCharSequenceArrayExtra(key)
+      Parcelable::class.java.isAssignableFrom(javaObjectType) -> intent.getParcelableArrayExtra(key)
 
       else -> throw IllegalArgumentException("Illegal value type $javaObjectType for key \"$key\"")
-    } ?: defaultValue()
+    }
   }
 }
 
 /**
- * Retrieves a references array list type of extended data from intent lazily.
+ * Retrieves a references array list type of extended data from arguments lazily.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -135,18 +140,18 @@ inline fun <reified T : Any> Fragment.bundleArrayList(
   crossinline defaultValue: () -> ArrayList<T>? = { null }
 ): Lazy<ArrayList<*>?> {
   val javaObjectType = T::class.javaObjectType
-  return lazy(LazyThreadSafetyMode.NONE) {
+  return fragmentArrayListBundler(defaultValue) {
     @Suppress("UNCHECKED_CAST")
     when {
-      String::class.java.isAssignableFrom(javaObjectType) -> arguments?.getStringArrayList(key)
+      String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayListExtra(key)
       CharSequence::class.java.isAssignableFrom(
         javaObjectType
-      ) -> arguments?.getCharSequenceArrayList(key)
+      ) -> intent.getCharSequenceArrayListExtra(key)
       Parcelable::class.java.isAssignableFrom(
         javaObjectType
-      ) -> arguments?.getParcelableArrayList<Parcelable>(key)
+      ) -> intent.getParcelableArrayListExtra<Parcelable>(key)
 
       else -> throw IllegalArgumentException("Illegal value type $javaObjectType for key \"$key\"")
-    } ?: defaultValue()
+    }
   }
 }

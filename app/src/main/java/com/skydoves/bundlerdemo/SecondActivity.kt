@@ -29,8 +29,8 @@ class SecondActivity : AppCompatActivity() {
   private val name: String by bundle("name", "")
   private val poster: Poster? by bundle("poster")
 
-  private val posterArray by bundleArray<Poster>("posterArray") { arrayOf() }
-  private val posterListArray by bundleArrayList<Poster>("posterArrayList") { arrayListOf() }
+  private val posterArray by bundleArray("posterArray") { arrayOf(Poster.create()) }
+  private val posterListArray by bundleArrayList("posterArrayList") { arrayListOf(Poster.create()) }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

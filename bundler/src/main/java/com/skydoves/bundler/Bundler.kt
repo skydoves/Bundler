@@ -66,7 +66,7 @@ inline class Bundler(val intent: Intent = Intent()) {
   }
 
   /** Completely replace the extras in the Intent with the given Bundle of extras. */
-  fun replaceExtras(extras: Bundle) = apply {
+  fun replaceExtras(extras: Bundle?) = apply {
     intent.replaceExtras(extras)
   }
 

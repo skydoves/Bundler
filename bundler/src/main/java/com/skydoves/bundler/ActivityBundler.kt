@@ -40,7 +40,7 @@ inline fun <reified T : Any> Activity.activityVariableBundler(
   }
 
 /**
- * Retrieves a primitive type of extended data from intent lazily.
+ * Retrieves a references type of extended data from intent lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
@@ -54,7 +54,7 @@ inline fun <reified T : Any> Activity.activityTypedBundler(
   }
 
 /**
- * Retrieves a primitive type of extended data from intent lazily.
+ * Retrieves a references array type of extended data from intent lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
@@ -68,7 +68,7 @@ inline fun <reified T : Any> Activity.activityArrayBundler(
   }
 
 /**
- * Retrieves a primitive type of extended data from intent lazily.
+ * Retrieves a references array list type of extended data from intent lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.

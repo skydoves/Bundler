@@ -19,7 +19,7 @@ package com.skydoves.bundler
 import androidx.fragment.app.Fragment
 
 /**
- * Returns an instance of a bundler that has the intent of an Activity.
+ * Returns an instance of a bundler that has the arguments of a fragment.
  */
 fun Fragment.fragmentBundler(): Bundler = Bundler().replaceExtras(arguments)
 

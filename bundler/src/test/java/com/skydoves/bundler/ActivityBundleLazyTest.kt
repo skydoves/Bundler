@@ -280,4 +280,61 @@ class ActivityBundleLazyTest {
     val userInfo by activity.bundleArray("userInfo") { arrayOf(UserInfo.create()) }
     userInfo?.get(0)
   }
+
+  @Test
+  fun bundleArrayListLazyTest() {
+    val activity = TestActivity()
+    val poster = Poster.create()
+    activity.intent = Intent().apply {
+      putExtra("stringArrayList", arrayListOf("skydoves0", "skydoves1", "skydoves2"))
+      putExtra("charSequenceArrayList", arrayListOf("skydoves0", "skydoves1", "skydoves2"))
+      putExtra("parcelableArrayList", arrayListOf(poster, poster, poster))
+    }
+
+    val stringArrayList by activity.bundleArrayList<String>("stringArrayList")
+    assertThat(stringArrayList?.size, `is`(3))
+    assertThat(stringArrayList?.get(0), `is`("skydoves0"))
+
+    val charSequenceArrayList by activity.bundleArrayList<String>("charSequenceArrayList")
+    assertThat(charSequenceArrayList?.size, `is`(3))
+    assertThat(charSequenceArrayList?.get(0), `is`("skydoves0"))
+
+    val parcelableArrayList by activity.bundleArrayList<String>("parcelableArrayList")
+    assertThat(parcelableArrayList?.size, `is`(3))
+    assertThat(parcelableArrayList?.get(0), `is`(poster))
+  }
+
+  @Test
+  fun bundleArrayLsitLazyDefaultValueTest() {
+    val activity = TestActivity()
+    activity.intent = Intent()
+    val poster = Poster.create()
+
+    val stringArrayList by activity.bundleArrayList("stringArrayList") {
+      arrayListOf("skydoves0", "skydoves1", "skydoves2")
+    }
+    assertThat(stringArrayList?.size, `is`(3))
+    assertThat(stringArrayList?.get(0), `is`("skydoves0"))
+
+    val charSequenceArrayList by activity.bundleArrayList("charSequenceArrayList") {
+      arrayListOf("skydoves0", "skydoves1", "skydoves2")
+    }
+    assertThat(charSequenceArrayList?.size, `is`(3))
+    assertThat(charSequenceArrayList?.get(0), `is`("skydoves0"))
+
+    val parcelableArrayList by activity.bundleArrayList("parcelableArrayList") {
+      arrayListOf(poster, poster, poster)
+    }
+    assertThat(parcelableArrayList?.size, `is`(3))
+    assertThat(parcelableArrayList?.get(0), `is`(poster))
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun bundleArrayListLazyWrongTypeExceptionTest() {
+    val activity = TestActivity()
+    activity.intent = Intent()
+
+    val userInfo by activity.bundleArrayList("userInfo") { arrayListOf(UserInfo.create()) }
+    userInfo?.get(0)
+  }
 }

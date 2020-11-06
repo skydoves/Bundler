@@ -274,4 +274,59 @@ class FragmentBundleLazyTest {
     val userInfo by fragment.bundleArray("userInfo") { arrayOf(UserInfo.create()) }
     userInfo?.get(0)
   }
+
+  @Test
+  fun bundleArrayListLazyTest() {
+    val fragment = TestFragment()
+    val poster = Poster.create()
+    fragment.arguments = intentOf {
+      putExtra("stringArrayList", arrayListOf("skydoves0", "skydoves1", "skydoves2"))
+      putExtra("charSequenceArrayList", arrayListOf("skydoves0", "skydoves1", "skydoves2"))
+      putExtra("parcelableArrayList", arrayListOf(poster, poster, poster))
+    }.extras
+
+    val stringArrayList by fragment.bundleArrayList<String>("stringArrayList")
+    assertThat(stringArrayList?.size, `is`(3))
+    assertThat(stringArrayList?.get(0), `is`("skydoves0"))
+
+    val charSequenceArrayList by fragment.bundleArrayList<String>("charSequenceArrayList")
+    assertThat(charSequenceArrayList?.size, `is`(3))
+    assertThat(charSequenceArrayList?.get(0), `is`("skydoves0"))
+
+    val parcelableArrayList by fragment.bundleArrayList<String>("parcelableArrayList")
+    assertThat(parcelableArrayList?.size, `is`(3))
+    assertThat(parcelableArrayList?.get(0), `is`(poster))
+  }
+
+  @Test
+  fun bundleArrayLsitLazyDefaultValueTest() {
+    val fragment = TestFragment()
+    val poster = Poster.create()
+
+    val stringArrayList by fragment.bundleArrayList("stringArrayList") {
+      arrayListOf("skydoves0", "skydoves1", "skydoves2")
+    }
+    assertThat(stringArrayList?.size, `is`(3))
+    assertThat(stringArrayList?.get(0), `is`("skydoves0"))
+
+    val charSequenceArrayList by fragment.bundleArrayList("charSequenceArrayList") {
+      arrayListOf("skydoves0", "skydoves1", "skydoves2")
+    }
+    assertThat(charSequenceArrayList?.size, `is`(3))
+    assertThat(charSequenceArrayList?.get(0), `is`("skydoves0"))
+
+    val parcelableArrayList by fragment.bundleArrayList("parcelableArrayList") {
+      arrayListOf(poster, poster, poster)
+    }
+    assertThat(parcelableArrayList?.size, `is`(3))
+    assertThat(parcelableArrayList?.get(0), `is`(poster))
+  }
+
+  @Test(expected = IllegalArgumentException::class)
+  fun bundleArrayListLazyWrongTypeExceptionTest() {
+    val fragment = TestFragment()
+
+    val userInfo by fragment.bundleArrayList("userInfo") { arrayListOf(UserInfo.create()) }
+    userInfo?.get(0)
+  }
 }

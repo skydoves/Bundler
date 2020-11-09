@@ -31,9 +31,10 @@ fun Activity.activityBundler(): Bundler = Bundler(intent)
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
  */
+@PublishedApi
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Activity.activityVariableBundler(
+internal inline fun <reified T : Any> Activity.activityVariableBundler(
   defaultValue: T,
   crossinline initializer: Bundler.() -> T?
 ): Lazy<T> =
@@ -47,9 +48,10 @@ inline fun <reified T : Any> Activity.activityVariableBundler(
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
  */
+@PublishedApi
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Activity.activityTypedBundler(
+internal inline fun <reified T : Any> Activity.activityTypedBundler(
   crossinline defaultValue: () -> T? = { null },
   crossinline initializer: Bundler.() -> T?
 ): Lazy<T?> =
@@ -63,9 +65,10 @@ inline fun <reified T : Any> Activity.activityTypedBundler(
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
  */
+@PublishedApi
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Activity.activityArrayBundler(
+internal inline fun <reified T : Any> Activity.activityArrayBundler(
   crossinline defaultValue: () -> Array<T>? = { null },
   crossinline initializer: Bundler.() -> Array<*>?
 ): Lazy<Array<*>?> =
@@ -79,9 +82,10 @@ inline fun <reified T : Any> Activity.activityArrayBundler(
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
  */
+@PublishedApi
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Activity.activityArrayListBundler(
+internal inline fun <reified T : Any> Activity.activityArrayListBundler(
   crossinline defaultValue: () -> ArrayList<T>? = { null },
   crossinline initializer: Bundler.() -> ArrayList<*>?
 ): Lazy<ArrayList<*>?> =

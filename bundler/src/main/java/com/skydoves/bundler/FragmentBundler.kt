@@ -29,9 +29,10 @@ fun Fragment.fragmentBundler(): Bundler = Bundler().replaceExtras(arguments)
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
  */
+@PublishedApi
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Fragment.fragmentVariableBundler(
+internal inline fun <reified T : Any> Fragment.fragmentVariableBundler(
   defaultValue: T,
   crossinline initializer: Bundler.() -> T?
 ): Lazy<T> =
@@ -45,9 +46,10 @@ inline fun <reified T : Any> Fragment.fragmentVariableBundler(
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
  */
+@PublishedApi
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Fragment.fragmentTypedBundler(
+internal inline fun <reified T : Any> Fragment.fragmentTypedBundler(
   crossinline defaultValue: () -> T? = { null },
   crossinline initializer: Bundler.() -> T?
 ): Lazy<T?> =
@@ -61,9 +63,10 @@ inline fun <reified T : Any> Fragment.fragmentTypedBundler(
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
  */
+@PublishedApi
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Fragment.fragmentArrayBundler(
+internal inline fun <reified T : Any> Fragment.fragmentArrayBundler(
   crossinline defaultValue: () -> Array<T>? = { null },
   crossinline initializer: Bundler.() -> Array<*>?
 ): Lazy<Array<*>?> =
@@ -77,9 +80,10 @@ inline fun <reified T : Any> Fragment.fragmentArrayBundler(
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
  */
+@PublishedApi
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Fragment.fragmentArrayListBundler(
+internal inline fun <reified T : Any> Fragment.fragmentArrayListBundler(
   crossinline defaultValue: () -> ArrayList<T>? = { null },
   crossinline initializer: Bundler.() -> ArrayList<*>?
 ): Lazy<ArrayList<*>?> =

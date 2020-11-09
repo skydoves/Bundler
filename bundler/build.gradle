@@ -28,7 +28,7 @@ android {
 }
 
 kotlin {
-    explicitApiWarning()
+    explicitApi()
 }
 
 dokkaHtml.configure {

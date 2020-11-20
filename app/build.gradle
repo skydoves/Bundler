@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
+    id 'org.jetbrains.kotlin.plugin.parcelize'
 }
 
 apply from: '../dependencies.gradle'
@@ -18,8 +18,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    androidExtensions {
-        experimental = true
+    buildFeatures {
+        viewBinding true
     }
 }
 

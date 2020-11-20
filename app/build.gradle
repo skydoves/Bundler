@@ -15,6 +15,9 @@ android {
         versionCode versions.versionCode
         versionName versions.versionName
     }
+    lintOptions {
+        abortOnError false
+    }
     kotlinOptions {
         jvmTarget = '1.8'
     }

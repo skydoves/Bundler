@@ -5,6 +5,7 @@
   <a href="https://android-arsenal.com/api?level=16"><img alt="API" src="https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat"/></a>
   <a href="https://github.com/skydoves/Bundler/actions"><img alt="Build Status" src="https://github.com/skydoves/Bundler/workflows/Android%20CI/badge.svg"/></a>
   <a href="https://androidweekly.net/issues/issue-439"><img alt="Android Weekly" src="https://skydoves.github.io/badges/android-weekly.svg"/></a>
+  <a href="https://skydoves.medium.com/clean-ways-to-handle-android-bundles-40af734bab3"><img alt="Medium" src="https://skydoves.github.io/badges/Story-Medium.svg"/></a>
   <a href="https://skydoves.github.io/libraries/bundler/html/bundler/com.skydoves.bundler/index.html"><img alt="Javadoc" src="https://skydoves.github.io/badges/javadoc-bundler.svg"/></a>
 </p>
 

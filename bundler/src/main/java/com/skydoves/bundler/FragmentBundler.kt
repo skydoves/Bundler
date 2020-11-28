@@ -24,7 +24,7 @@ import androidx.fragment.app.Fragment
 fun Fragment.fragmentBundler(): Bundler = Bundler().replaceExtras(arguments)
 
 /**
- * Retrieves a primitive type of extended data from intent lazily.
+ * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
@@ -41,7 +41,7 @@ internal inline fun <reified T : Any> Fragment.fragmentVariableBundler(
   }
 
 /**
- * Retrieves a primitive type of extended data from intent lazily.
+ * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
@@ -58,7 +58,7 @@ internal inline fun <reified T : Any> Fragment.fragmentTypedBundler(
   }
 
 /**
- * Retrieves a primitive type of extended data from intent lazily.
+ * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param initializer The initializer for providing an instance of the type parameter.
  */
@@ -73,7 +73,7 @@ internal inline fun <reified T : Any> Fragment.fragmentNonNullTypedBundler(
   }
 
 /**
- * Retrieves a primitive type of extended data from intent lazily.
+ * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
@@ -90,7 +90,7 @@ internal inline fun <reified T : Any> Fragment.fragmentArrayBundler(
   }
 
 /**
- * Retrieves a primitive type of extended data from intent lazily.
+ * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.

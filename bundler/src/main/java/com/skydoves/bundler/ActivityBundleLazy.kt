@@ -24,7 +24,7 @@ import android.os.Parcelable
 import java.io.Serializable
 
 /**
- * Retrieves a primitive type of extended data from intent lazily.
+ * Retrieves a primitive type of extended data from the Intent lazily.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -54,7 +54,7 @@ inline fun <reified T : Any> Activity.bundle(key: String, defaultValue: T): Lazy
 }
 
 /**
- * Retrieves a references type of extended data from intent lazily.
+ * Retrieves a references type of extended data from the Intent lazily.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -98,12 +98,12 @@ inline fun <reified T : Any> Activity.bundle(
 }
 
 /**
- * Retrieves a non-null references type of extended data from intent lazily.
+ * Retrieves a non-null references type of extended data from the Intent lazily.
  *
  * @param key The name of the desired item.
  *
  * @throws IllegalArgumentException When a value is not a supported type of [Bundle] or null.
- * @throws NullPointerException When there is no desired value from the intent.
+ * @throws NullPointerException When there is no desired value from the Intent.
  */
 @JvmSynthetic
 @InlineBundleDsl
@@ -141,7 +141,7 @@ inline fun <reified T : Any> Activity.bundleNonNull(
 }
 
 /**
- * Retrieves a references array type of extended data from intent lazily.
+ * Retrieves a references array type of extended data from the Intent lazily.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -169,7 +169,7 @@ inline fun <reified T : Any> Activity.bundleArray(
 }
 
 /**
- * Retrieves a references array list type of extended data from intent lazily.
+ * Retrieves a references array list type of extended data from the Intent lazily.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.

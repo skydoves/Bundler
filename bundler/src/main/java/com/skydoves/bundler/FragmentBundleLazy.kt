@@ -156,13 +156,15 @@ inline fun <reified T : Any> Fragment.bundleArray(
 ): Lazy<Array<T>?> {
   val javaObjectType = T::class.javaObjectType
   return fragmentArrayBundler(defaultValue) {
-    when {
-      String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayExtra(key)
-      CharSequence::class.java.isAssignableFrom(javaObjectType) -> intent.getCharSequenceArrayExtra(key)
-      Parcelable::class.java.isAssignableFrom(javaObjectType) -> intent.getParcelableArrayExtra(key)
+    (
+      when {
+        String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayExtra(key)
+        CharSequence::class.java.isAssignableFrom(javaObjectType) -> intent.getCharSequenceArrayExtra(key)
+        Parcelable::class.java.isAssignableFrom(javaObjectType) -> intent.getParcelableArrayExtra(key)
 
-      else -> throw IllegalArgumentException("Illegal value type $javaObjectType for key \"$key\"")
-    } as? Array<T>
+        else -> throw IllegalArgumentException("Illegal value type $javaObjectType for key \"$key\"")
+      }
+      )?.filterIsInstance<T>()?.toTypedArray()
   }
 }
 

@@ -26,10 +26,10 @@ import com.skydoves.bundler.bundleArrayList
 class SecondActivity : AppCompatActivity() {
 
   private val id: Long by bundle("id", -1)
-  private val name: String by bundle("name", "")
+  private val name: String? by bundle("name")
   private val poster: Poster? by bundle("poster")
 
-  private val posterArray by bundleArray("posterArray") { arrayOf(Poster.create()) }
+  private val posterArray by bundleArray<Poster>("posterArray")
   private val posterListArray by bundleArrayList("posterArrayList") { arrayListOf(Poster.create()) }
 
   override fun onCreate(savedInstanceState: Bundle?) {

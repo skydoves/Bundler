@@ -82,6 +82,7 @@ class FragmentBundlerTest {
   }
 
   @Test
+  @Suppress("UNCHECKED_CAST")
   fun fragmentArrayBundler() {
     val fragment = TestFragment()
     val poster = Poster.create()
@@ -90,8 +91,8 @@ class FragmentBundlerTest {
       putExtra("posterArray", arrayOf(poster, poster, poster))
     }.extras
 
-    val posterArray by fragment.fragmentArrayBundler<Poster> {
-      intent.getParcelableArrayExtra("posterArray")
+    val posterArray by fragment.fragmentArrayBundler {
+      intent.getParcelableArrayExtra("posterArray") as Array<Poster>
     }
 
     assertThat(posterArray?.size, `is`(3))
@@ -108,7 +109,7 @@ class FragmentBundlerTest {
     }.extras
 
     val posterArrayList by fragment.fragmentArrayListBundler<Poster> {
-      intent.getParcelableArrayListExtra<Poster>("posterArrayList")
+      intent.getParcelableArrayListExtra("posterArrayList")
     }
 
     assertThat(posterArrayList?.size, `is`(3))

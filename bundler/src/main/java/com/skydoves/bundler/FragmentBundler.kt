@@ -83,8 +83,8 @@ internal inline fun <reified T : Any> Fragment.fragmentNonNullTypedBundler(
 @InlineBundleDsl
 internal inline fun <reified T : Any> Fragment.fragmentArrayBundler(
   crossinline defaultValue: () -> Array<T>? = { null },
-  crossinline initializer: Bundler.() -> Array<*>?
-): Lazy<Array<*>?> =
+  crossinline initializer: Bundler.() -> Array<T>?
+): Lazy<Array<T>?> =
   lazy(LazyThreadSafetyMode.NONE) {
     fragmentBundler().initializer() ?: defaultValue()
   }
@@ -100,8 +100,8 @@ internal inline fun <reified T : Any> Fragment.fragmentArrayBundler(
 @InlineBundleDsl
 internal inline fun <reified T : Any> Fragment.fragmentArrayListBundler(
   crossinline defaultValue: () -> ArrayList<T>? = { null },
-  crossinline initializer: Bundler.() -> ArrayList<*>?
-): Lazy<ArrayList<*>?> =
+  crossinline initializer: Bundler.() -> ArrayList<T>?
+): Lazy<ArrayList<T>?> =
   lazy(LazyThreadSafetyMode.NONE) {
     fragmentBundler().initializer() ?: defaultValue()
   }

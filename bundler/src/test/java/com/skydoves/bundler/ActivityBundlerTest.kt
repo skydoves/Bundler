@@ -83,6 +83,7 @@ class ActivityBundlerTest {
   }
 
   @Test
+  @Suppress("UNCHECKED_CAST")
   fun activityArrayBundlerTest() {
     val activity = TestActivity()
     val poster = Poster.create()
@@ -109,7 +110,7 @@ class ActivityBundlerTest {
     }
 
     val posterArrayList by activity.activityArrayListBundler<Poster> {
-      intent.getParcelableArrayListExtra<Poster>("posterArrayList")
+      intent.getParcelableArrayListExtra("posterArrayList")
     }
 
     assertThat(posterArrayList?.size, `is`(3))

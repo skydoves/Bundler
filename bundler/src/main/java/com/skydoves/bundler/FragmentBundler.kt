@@ -60,6 +60,21 @@ internal inline fun <reified T : Any> Fragment.fragmentTypedBundler(
 /**
  * Retrieves a primitive type of extended data from intent lazily.
  *
+ * @param initializer The initializer for providing an instance of the type parameter.
+ */
+@PublishedApi
+@JvmSynthetic
+@InlineBundleDsl
+internal inline fun <reified T : Any> Fragment.fragmentNonNullTypedBundler(
+  crossinline initializer: Bundler.() -> T
+): Lazy<T> =
+  lazy(LazyThreadSafetyMode.NONE) {
+    fragmentBundler().initializer()
+  }
+
+/**
+ * Retrieves a primitive type of extended data from intent lazily.
+ *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
  */

@@ -68,6 +68,20 @@ class FragmentBundlerTest {
   }
 
   @Test
+  fun fragmentNonNullTypedBundlerTest() {
+    val fragment = TestFragment()
+    fragment.arguments = intentOf {
+      putExtra("poster", Poster.create())
+    }.extras
+
+    val poster by fragment.fragmentNonNullTypedBundler {
+      intent.getParcelableExtra("poster")!!
+    }
+
+    assertThat(poster, `is`(Poster.create()))
+  }
+
+  @Test
   fun fragmentArrayBundler() {
     val fragment = TestFragment()
     val poster = Poster.create()

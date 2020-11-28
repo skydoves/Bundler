@@ -60,6 +60,21 @@ internal inline fun <reified T : Any> Activity.activityTypedBundler(
   }
 
 /**
+ * Retrieves a references type of extended data from intent lazily.
+ *
+ * @param initializer The initializer for providing a non-null instance of the type parameter.
+ */
+@PublishedApi
+@JvmSynthetic
+@InlineBundleDsl
+internal inline fun <reified T : Any> Activity.activityNonNullTypedBundler(
+  crossinline initializer: Bundler.() -> T
+): Lazy<T> =
+  lazy(LazyThreadSafetyMode.NONE) {
+    activityBundler().initializer()
+  }
+
+/**
  * Retrieves a references array type of extended data from intent lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.

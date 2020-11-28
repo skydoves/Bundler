@@ -69,6 +69,20 @@ class ActivityBundlerTest {
   }
 
   @Test
+  fun activityNonNullTypedBundlerTest() {
+    val activity = TestActivity()
+    activity.intent = intentOf {
+      putExtra("poster", Poster.create())
+    }
+
+    val poster by activity.activityNonNullTypedBundler {
+      intent.getParcelableExtra("poster")!!
+    }
+
+    assertThat(poster, `is`(Poster.create()))
+  }
+
+  @Test
   fun activityArrayBundlerTest() {
     val activity = TestActivity()
     val poster = Poster.create()

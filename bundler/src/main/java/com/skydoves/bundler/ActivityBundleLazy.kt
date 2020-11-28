@@ -108,7 +108,7 @@ inline fun <reified T : Any> Activity.bundle(
 @JvmSynthetic
 @InlineBundleDsl
 inline fun <reified T : Any> Activity.bundleNonNull(
-  key: String,
+  key: String
 ): Lazy<T> {
   val objectType = T::class.javaObjectType
   return activityNonNullTypedBundler {

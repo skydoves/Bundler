@@ -98,6 +98,49 @@ inline fun <reified T : Any> Fragment.bundle(
 }
 
 /**
+ * Retrieves a references type of extended data from arguments lazily.
+ *
+ * @param key The name of the desired item.
+ *
+ * @throws IllegalArgumentException When a value is not a supported type of [Bundle].
+ * @throws NullPointerException When there is no desired value from the intent.
+ */
+@JvmSynthetic
+@InlineBundleDsl
+inline fun <reified T : Any> Fragment.bundleNonNull(
+  key: String
+): Lazy<T> {
+  val objectType = T::class.javaObjectType
+  return fragmentNonNullTypedBundler {
+    when {
+      // references
+      Bundle::class.java.isAssignableFrom(objectType) -> intent.getBundleExtra(key) as T
+      CharSequence::class.java.isAssignableFrom(objectType) -> intent.getCharSequenceExtra(key) as T
+      Parcelable::class.java.isAssignableFrom(objectType) -> intent.getParcelableExtra<Parcelable>(
+        key
+      ) as T
+      Serializable::class.java.isAssignableFrom(objectType) -> intent.getSerializableExtra(
+        key
+      ) as T
+
+      // scalar arrays
+      BooleanArray::class.java.isAssignableFrom(objectType) -> intent.getBooleanArrayExtra(
+        key
+      ) as T
+      ByteArray::class.java.isAssignableFrom(objectType) -> intent.getByteArrayExtra(key) as T
+      CharArray::class.java.isAssignableFrom(objectType) -> intent.getCharArrayExtra(key) as T
+      DoubleArray::class.java.isAssignableFrom(objectType) -> intent.getDoubleArrayExtra(key) as T
+      FloatArray::class.java.isAssignableFrom(objectType) -> intent.getFloatArrayExtra(key) as T
+      IntArray::class.java.isAssignableFrom(objectType) -> intent.getIntArrayExtra(key) as T
+      LongArray::class.java.isAssignableFrom(objectType) -> intent.getLongArrayExtra(key) as T
+      ShortArray::class.java.isAssignableFrom(objectType) -> intent.getShortArrayExtra(key) as T
+
+      else -> throw IllegalArgumentException("Illegal value type $objectType for key \"$key\"")
+    }
+  }
+}
+
+/**
  * Retrieves a references array type of extended data from arguments lazily.
  *
  * @param key The name of the desired item.

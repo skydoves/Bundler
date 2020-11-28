@@ -221,6 +221,76 @@ class FragmentBundleLazyTest {
   }
 
   @Test
+  fun bundleNonNullReferenceLazyTest() {
+    val fragment = TestFragment()
+    fragment.arguments = intentOf {
+      val poster = Poster.create()
+      val serializablePoster = PosterSerializable.create()
+
+      putExtra("bundle", Bundle().apply { putString("bundleString", "skydoves") })
+      putExtra("charSequence", "skydoves")
+      putExtra("parcelable", poster)
+      putExtra("serializable", serializablePoster)
+      putExtra("booleanArray", booleanArrayOf(true, false, true))
+      putExtra("byteArray", byteArrayOf(0.toByte(), 1.toByte(), 2.toByte()))
+      putExtra("doubleArray", doubleArrayOf(0.0, 1.0, 2.0))
+      putExtra("floatArray", floatArrayOf(0f, 1f, 2f))
+      putExtra("intArray", intArrayOf(0, 1, 2))
+      putExtra("longArray", longArrayOf(0L, 1L, 2L))
+      putExtra("shortArray", shortArrayOf(0, 1, 2))
+    }.extras
+
+    val bundle: Bundle by fragment.bundleNonNull("bundle")
+    assertThat(bundle.getString("bundleString"), `is`("skydoves"))
+
+    val charSequence: CharSequence by fragment.bundleNonNull("charSequence")
+    assertThat(charSequence, `is`("skydoves"))
+
+    val parcelable: Poster by fragment.bundleNonNull("parcelable")
+    assertThat(parcelable, `is`(Poster.create()))
+
+    val serializable: PosterSerializable by fragment.bundleNonNull("serializable")
+    assertThat(serializable, `is`(PosterSerializable.create()))
+
+    val booleanArray: BooleanArray by fragment.bundleNonNull("booleanArray")
+    assertThat(booleanArray, `is`(booleanArrayOf(true, false, true)))
+
+    val byteArray: ByteArray by fragment.bundleNonNull("byteArray")
+    assertThat(byteArray, `is`(byteArrayOf(0.toByte(), 1.toByte(), 2.toByte())))
+
+    val doubleArray: DoubleArray by fragment.bundleNonNull("doubleArray")
+    assertThat(doubleArray, `is`(doubleArrayOf(0.0, 1.0, 2.0)))
+
+    val floatArray: FloatArray by fragment.bundleNonNull("floatArray")
+    assertThat(floatArray, `is`(floatArrayOf(0f, 1f, 2f)))
+
+    val intArray: IntArray by fragment.bundleNonNull("intArray")
+    assertThat(intArray, `is`(intArrayOf(0, 1, 2)))
+
+    val longArray: LongArray by fragment.bundleNonNull("longArray")
+    assertThat(longArray, `is`(longArrayOf(0L, 1L, 2L)))
+
+    val shortArray: ShortArray by fragment.bundleNonNull("shortArray")
+    assertThat(shortArray, `is`(shortArrayOf(0, 1, 2)))
+  }
+
+  @Test(expected = java.lang.IllegalArgumentException::class)
+  fun bundleNonNullReferenceLazyWrongTypeExceptionTest() {
+    val fragment = TestFragment()
+
+    val userInfo: UserInfo by fragment.bundleNonNull("userInfo")
+    userInfo.nickname
+  }
+
+  @Test(expected = NullPointerException::class)
+  fun bundleNonNullReferenceLazyNoValueIncludedExceptionTest() {
+    val fragment = TestFragment()
+
+    val poster: Poster by fragment.bundleNonNull("poster")
+    poster.name
+  }
+
+  @Test
   fun bundleArrayLazyTest() {
     val fragment = TestFragment()
     val poster = Poster.create()

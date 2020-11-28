@@ -153,7 +153,7 @@ inline fun <reified T : Any> Activity.bundleNonNull(
 inline fun <reified T : Any> Activity.bundleArray(
   key: String,
   crossinline defaultValue: () -> Array<T>? = { null }
-): Lazy<Array<*>?> {
+): Lazy<Array<T>?> {
   val javaObjectType = T::class.javaObjectType
   return activityArrayBundler(defaultValue) {
     when {
@@ -162,7 +162,7 @@ inline fun <reified T : Any> Activity.bundleArray(
       Parcelable::class.java.isAssignableFrom(javaObjectType) -> intent.getParcelableArrayExtra(key)
 
       else -> throw IllegalArgumentException("Illegal value type $javaObjectType for key \"$key\"")
-    }
+    } as Array<T>?
   }
 }
 
@@ -179,7 +179,7 @@ inline fun <reified T : Any> Activity.bundleArray(
 inline fun <reified T : Any> Activity.bundleArrayList(
   key: String,
   crossinline defaultValue: () -> ArrayList<T>? = { null }
-): Lazy<ArrayList<*>?> {
+): Lazy<ArrayList<T>?> {
   val javaObjectType = T::class.javaObjectType
   return activityArrayListBundler(defaultValue) {
     when {
@@ -192,6 +192,6 @@ inline fun <reified T : Any> Activity.bundleArrayList(
       ) -> intent.getParcelableArrayListExtra<Parcelable>(key)
 
       else -> throw IllegalArgumentException("Illegal value type $javaObjectType for key \"$key\"")
-    }
+    } as ArrayList<T>?
   }
 }

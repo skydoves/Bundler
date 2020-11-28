@@ -371,7 +371,7 @@ class ActivityBundleLazyTest {
     assertThat(charSequenceArrayList?.size, `is`(3))
     assertThat(charSequenceArrayList?.get(0), `is`("skydoves0"))
 
-    val parcelableArrayList by activity.bundleArrayList<String>("parcelableArrayList")
+    val parcelableArrayList by activity.bundleArrayList<Poster>("parcelableArrayList")
     assertThat(parcelableArrayList?.size, `is`(3))
     assertThat(parcelableArrayList?.get(0), `is`(poster))
   }

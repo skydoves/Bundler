@@ -85,8 +85,8 @@ internal inline fun <reified T : Any> Activity.activityNonNullTypedBundler(
 @InlineBundleDsl
 internal inline fun <reified T : Any> Activity.activityArrayBundler(
   crossinline defaultValue: () -> Array<T>? = { null },
-  crossinline initializer: Bundler.() -> Array<*>?
-): Lazy<Array<*>?> =
+  crossinline initializer: Bundler.() -> Array<T>?
+): Lazy<Array<T>?> =
   lazy(LazyThreadSafetyMode.NONE) {
     activityBundler().initializer() ?: defaultValue()
   }
@@ -102,8 +102,8 @@ internal inline fun <reified T : Any> Activity.activityArrayBundler(
 @InlineBundleDsl
 internal inline fun <reified T : Any> Activity.activityArrayListBundler(
   crossinline defaultValue: () -> ArrayList<T>? = { null },
-  crossinline initializer: Bundler.() -> ArrayList<*>?
-): Lazy<ArrayList<*>?> =
+  crossinline initializer: Bundler.() -> ArrayList<T>?
+): Lazy<ArrayList<T>?> =
   lazy(LazyThreadSafetyMode.NONE) {
     activityBundler().initializer() ?: defaultValue()
   }

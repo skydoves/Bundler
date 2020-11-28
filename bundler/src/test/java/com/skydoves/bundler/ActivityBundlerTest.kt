@@ -92,7 +92,7 @@ class ActivityBundlerTest {
     }
 
     val posterArray by activity.activityArrayBundler<Poster> {
-      intent.getParcelableArrayExtra("posterArray")
+      intent.getParcelableArrayExtra("posterArray") as? Array<Poster>
     }
 
     assertThat(posterArray?.size, `is`(3))

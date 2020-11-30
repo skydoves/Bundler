@@ -103,7 +103,7 @@ inline fun <reified T : Any> Activity.bundle(
  * @param key The name of the desired item.
  *
  * @throws IllegalArgumentException When a value is not a supported type of [Bundle] or null.
- * @throws NullPointerException When there is no desired value from the Intent.
+ * @exception NullPointerException When there is no desired value from the Intent.
  */
 @JvmSynthetic
 @InlineBundleDsl

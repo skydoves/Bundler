@@ -17,7 +17,6 @@
 package com.skydoves.bundler
 
 import android.app.Activity
-import android.os.Bundle
 import androidx.lifecycle.LiveData
 import com.skydoves.bundler.IntentLiveDataProvider.provideArrayIntentLiveData
 import com.skydoves.bundler.IntentLiveDataProvider.provideArrayListIntentLiveData
@@ -28,8 +27,6 @@ import com.skydoves.bundler.IntentLiveDataProvider.provideIntentLiveData
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
- *
- * @throws IllegalArgumentException When a value is not a supported type of [Bundle].
  */
 @JvmSynthetic
 @InlineBundleDsl
@@ -50,8 +47,6 @@ inline fun <reified T : Any> Activity.observeBundle(
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
- *
- * @throws IllegalArgumentException When a value is not a supported type of [Bundle].
  */
 @JvmSynthetic
 @InlineBundleDsl
@@ -72,8 +67,6 @@ inline fun <reified T : Any?> Activity.observeBundle(
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
- *
- * @throws IllegalArgumentException When a value is not a supported type of [Bundle].
  */
 @JvmSynthetic
 @InlineBundleDsl
@@ -94,8 +87,6 @@ inline fun <reified T : Any> Activity.observeBundleArray(
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
- *
- * @throws IllegalArgumentException When a value is not a supported type of [Bundle].
  */
 @JvmSynthetic
 @InlineBundleDsl

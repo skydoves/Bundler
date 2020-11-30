@@ -114,6 +114,29 @@ We can initialize argument values lazily in Fragments using the `bundle` express
 + val poster: Poster? by bundle("poster")
 ```
 
+### bundleNonNull
+The `bundle` expression for initializing objects (e.g. Bundle, CharSequence, Parcelable, Serializable, Arrays), the property type must be null-able. But If we want to initialize them non-nullable type, we can initialize them to non-nullable type using the `bundleNonNull` expression.
+```diff
+- val poster: Poster? by bundle("poster")
++ val poster: Poster by bundleNotNull("poster")
+```
+
+### observeBundle
+We can observe the bundle data as LiveData using the `observeBundle` expression.<br>
+If there are no extra & arguments in the Activity or Fragment, `null` will be passed to the observers.
+```kotlin
+private val id by observeBundle("id", -1L)
+private val poster by observeBundle<Poster>("poster")
+
+id.observe(this) {
+  vm.id = it
+}
+
+poster.observe(this) {
+  binding.name = it.name
+}
+```
+
 ## Find this library useful? :heart:
 Support it by joining __[stargazers](https://github.com/skydoves/bundler/stargazers)__ for this repository. :star: <br>
 And __[follow](https://github.com/skydoves)__ me for my next creations! 🤩

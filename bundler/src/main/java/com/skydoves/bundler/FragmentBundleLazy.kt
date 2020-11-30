@@ -103,7 +103,7 @@ inline fun <reified T : Any> Fragment.bundle(
  * @param key The name of the desired item.
  *
  * @throws IllegalArgumentException When a value is not a supported type of [Bundle].
- * @throws NullPointerException When there is no desired value from the arguments.
+ * @exception NullPointerException When there is no desired value from the arguments.
  */
 @JvmSynthetic
 @InlineBundleDsl

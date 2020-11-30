@@ -125,8 +125,8 @@ The `bundle` expression for initializing objects (e.g. Bundle, CharSequence, Par
 We can observe the bundle data as LiveData using the `observeBundle` expression.<br>
 If there are no extra & arguments in the Activity or Fragment, `null` will be passed to the observers.
 ```kotlin
-private val id by observeBundle("id", -1L)
-private val poster by observeBundle<Poster>("poster")
+private val id: LiveData<Long> by observeBundle("id", -1L)
+private val poster: LiveData<Poster> by observeBundle("poster")
 
 id.observe(this) {
   vm.id = it

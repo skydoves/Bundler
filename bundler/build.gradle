@@ -4,8 +4,8 @@ plugins {
     id 'org.jetbrains.dokka'
 }
 
-apply from: '../dependencies.gradle'
-apply from: '../publish.gradle'
+apply from: "$rootDir/dependencies.gradle"
+apply from: "$rootDir/publish.gradle"
 
 android {
     compileSdkVersion versions.compileSdk
@@ -55,4 +55,4 @@ dependencies {
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockitoKotlinVersion"
 }
 
-apply from: '../spotless.gradle'
+apply from: "$rootDir/spotless.gradle"

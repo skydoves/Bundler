@@ -4,7 +4,7 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.parcelize'
 }
 
-apply from: '../dependencies.gradle'
+apply from: "$rootDir/dependencies.gradle"
 
 android {
     compileSdkVersion versions.compileSdk
@@ -32,4 +32,4 @@ dependencies {
     implementation project(":bundler")
 }
 
-apply from: '../spotless.gradle'
+apply from: "$rootDir/spotless.gradle"

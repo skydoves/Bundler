@@ -85,7 +85,13 @@ inline class Bundler(val intent: Intent = Intent()) {
     intent.flags = flags
   }
 
-  /** Launch a new activity. */
+  /**
+   * Launch a new activity with no options specified.
+   *
+   * @param context A context for launching an activity.
+   *
+   * @throws android.content.ActivityNotFoundException
+   */
   fun startActivity(context: Context) {
     context.startActivity(intent)
   }
@@ -95,6 +101,8 @@ inline class Bundler(val intent: Intent = Intent()) {
    *
    * @param context A context for launching an activity.
    * @param options Additional options for how the Activity should be started.
+   *
+   * @throws android.content.ActivityNotFoundException
    */
   fun startActivity(context: Context, options: Bundle) {
     context.startActivity(intent, options)
@@ -106,9 +114,28 @@ inline class Bundler(val intent: Intent = Intent()) {
    * @param activity An activity for receiving the result.
    * @param requestCode If >= 0, this code will be returned in
    *                    onActivityResult() when the activity exits.
+   *
+   * @throws android.content.ActivityNotFoundException
    */
   fun startActivityForResult(activity: Activity, requestCode: Int) {
     activity.startActivityForResult(intent, requestCode)
+  }
+
+  /**
+   * Launch an activity for which you would like a result when it finished.
+   *
+   * @param activity An activity for receiving the result.
+   * @param requestCode If >= 0, this code will be returned in
+   *                    onActivityResult() when the activity exits.
+   * @param options Additional options for how the Activity should be started.
+   * See {@link android.content.Context#startActivity(Intent, Bundle)}
+   * Context.startActivity(Intent, Bundle)} for more details.
+   *
+   * @throws android.content.ActivityNotFoundException
+   */
+
+  fun startActivityForResult(activity: Activity, requestCode: Int, options: Bundle) {
+    activity.startActivityForResult(intent, requestCode, options)
   }
 
   /**
@@ -165,7 +192,7 @@ inline class Bundler(val intent: Intent = Intent()) {
    * @throws IllegalArgumentException When a value is not a supported type of [Bundle].
    */
   @InlineBundleDsl
-  fun putExtra(key: String, value: Any) = apply {
+  fun putExtra(key: String, value: Any?) = apply {
     intent.putExtras(com.skydoves.bundler.bundleOf(key to value))
   }
 

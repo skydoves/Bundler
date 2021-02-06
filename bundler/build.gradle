@@ -1,11 +1,9 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'org.jetbrains.dokka'
 }
 
 apply from: "$rootDir/dependencies.gradle"
-apply from: "$rootDir/publish.gradle"
 
 android {
     compileSdkVersion versions.compileSdk
@@ -27,22 +25,9 @@ kotlin {
     explicitApi()
 }
 
-dokkaHtml.configure {
-    dokkaSourceSets {
-        named("main") {
-            noAndroidSdkLink.set(false)
-        }
-    }
-}
-
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions.freeCompilerArgs += ["-XXLanguage:+InlineClasses"]
     kotlinOptions.freeCompilerArgs += ["-Xopt-in=kotlin.OptIn"]
-}
-
-tasks.withType(Javadoc) {
-    excludes = ['**/*.kt']
-    options.addBooleanOption('Xdoclint:none', true)
 }
 
 dependencies {
@@ -55,4 +40,5 @@ dependencies {
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$versions.mockitoKotlinVersion"
 }
 
-apply from: "$rootDir/spotless.gradle"
+apply plugin: "com.vanniktech.maven.publish"
+apply from: '../spotless.gradle'

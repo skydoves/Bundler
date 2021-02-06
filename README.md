@@ -25,7 +25,7 @@ Add below codes to your **root** `build.gradle` file (not your module build.grad
 ```gradle
 allprojects {
     repositories {
-        jcenter()
+        mavenCentral()
     }
 }
 ```

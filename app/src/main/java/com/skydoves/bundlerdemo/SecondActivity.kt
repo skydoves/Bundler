@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.skydoves.bundler.bundle
 import com.skydoves.bundler.bundleArray
 import com.skydoves.bundler.bundleArrayList
+import com.skydoves.bundler.bundleValue
 
 class SecondActivity : AppCompatActivity() {
 
@@ -37,6 +38,7 @@ class SecondActivity : AppCompatActivity() {
     setContentView(R.layout.activity_second)
 
     Log.d(TAG, "id: $id")
+    Log.d(TAG, "id: ${bundleValue("name", "")}")
     Log.d(TAG, "name: $name")
     Log.d(TAG, "poster: $poster")
     Log.d(TAG, "posterArray: ${posterArray?.get(0)}")

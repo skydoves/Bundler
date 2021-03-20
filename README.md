@@ -144,7 +144,7 @@ poster.observe(this) {
 }
 ```
 
-### observeValue
+### bundleValue
 We can also retrieve intent & arguments extra values from Activity and Fragment immediately. We can use `bundleValue`, `bundleNonNullValue`, `bundleArrayValue`, `bundleArrayListValue`.
 
 ```kotlin

@@ -40,13 +40,27 @@ class FragmentBundlerTest {
   }
 
   @Test
-  fun fragmentVariableBundler() {
+  fun fragmentVariableBundlerTest() {
     val fragment = TestFragment()
     fragment.arguments = intentOf {
       putExtra("name", "skydoves")
     }.extras
 
     val name by fragment.fragmentVariableBundler("skydoves") {
+      intent.getStringExtra("name")
+    }
+
+    assertThat(name, `is`("skydoves"))
+  }
+
+  @Test
+  fun fragmentVariableBundlerValueTest() {
+    val fragment = TestFragment()
+    fragment.arguments = intentOf {
+      putExtra("name", "skydoves")
+    }.extras
+
+    val name = fragment.fragmentVariableBundlerValue("skydoves") {
       intent.getStringExtra("name")
     }
 
@@ -68,6 +82,20 @@ class FragmentBundlerTest {
   }
 
   @Test
+  fun fragmentTypedBundlerValueTest() {
+    val fragment = TestFragment()
+    fragment.arguments = intentOf {
+      putExtra("poster", Poster.create())
+    }.extras
+
+    val poster = fragment.fragmentTypedBundlerValue {
+      intent.getParcelableExtra("poster") as? Poster
+    }
+
+    assertThat(poster, `is`(Poster.create()))
+  }
+
+  @Test
   fun fragmentNonNullTypedBundlerTest() {
     val fragment = TestFragment()
     fragment.arguments = intentOf {
@@ -82,8 +110,22 @@ class FragmentBundlerTest {
   }
 
   @Test
+  fun fragmentNonNullTypedBundlerValueTest() {
+    val fragment = TestFragment()
+    fragment.arguments = intentOf {
+      putExtra("poster", Poster.create())
+    }.extras
+
+    val poster = fragment.fragmentNonNullTypedBundlerValue {
+      intent.getParcelableExtra("poster")!!
+    }
+
+    assertThat(poster, `is`(Poster.create()))
+  }
+
+  @Test
   @Suppress("UNCHECKED_CAST")
-  fun fragmentArrayBundler() {
+  fun fragmentArrayBundlerTest() {
     val fragment = TestFragment()
     val poster = Poster.create()
 
@@ -92,6 +134,24 @@ class FragmentBundlerTest {
     }.extras
 
     val posterArray by fragment.fragmentArrayBundler {
+      intent.getParcelableArrayExtra("posterArray") as Array<Poster>
+    }
+
+    assertThat(posterArray?.size, `is`(3))
+    assertThat(posterArray?.get(0), `is`(poster))
+  }
+
+  @Test
+  @Suppress("UNCHECKED_CAST")
+  fun fragmentArrayBundlerValueTest() {
+    val fragment = TestFragment()
+    val poster = Poster.create()
+
+    fragment.arguments = intentOf {
+      putExtra("posterArray", arrayOf(poster, poster, poster))
+    }.extras
+
+    val posterArray = fragment.fragmentArrayBundlerValue {
       intent.getParcelableArrayExtra("posterArray") as Array<Poster>
     }
 
@@ -109,6 +169,23 @@ class FragmentBundlerTest {
     }.extras
 
     val posterArrayList by fragment.fragmentArrayListBundler<Poster> {
+      intent.getParcelableArrayListExtra("posterArrayList")
+    }
+
+    assertThat(posterArrayList?.size, `is`(3))
+    assertThat(posterArrayList?.get(0), `is`(poster))
+  }
+
+  @Test
+  fun activityArrayListBundlerValueTest() {
+    val fragment = TestFragment()
+    val poster = Poster.create()
+
+    fragment.arguments = intentOf {
+      putExtra("posterArrayList", arrayListOf(poster, poster, poster))
+    }.extras
+
+    val posterArrayList = fragment.fragmentArrayListBundlerValue<Poster> {
       intent.getParcelableArrayListExtra("posterArrayList")
     }
 

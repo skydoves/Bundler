@@ -41,6 +41,20 @@ internal inline fun <reified T : Any> Fragment.fragmentVariableBundler(
   }
 
 /**
+ * Retrieves a primitive type of extended data from arguments immediately.
+ *
+ * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
+ * @param initializer The initializer for providing an instance of the type parameter.
+ */
+@PublishedApi
+@JvmSynthetic
+@InlineBundleDsl
+internal inline fun <reified T : Any> Fragment.fragmentVariableBundlerValue(
+  defaultValue: T,
+  crossinline initializer: Bundler.() -> T?
+): T = fragmentBundler().initializer() ?: defaultValue
+
+/**
  * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -58,6 +72,20 @@ internal inline fun <reified T : Any> Fragment.fragmentTypedBundler(
   }
 
 /**
+ * Retrieves a primitive type of extended data from arguments immediately.
+ *
+ * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
+ * @param initializer The initializer for providing an instance of the type parameter.
+ */
+@PublishedApi
+@JvmSynthetic
+@InlineBundleDsl
+internal inline fun <reified T : Any> Fragment.fragmentTypedBundlerValue(
+  crossinline defaultValue: () -> T? = { null },
+  crossinline initializer: Bundler.() -> T?
+): T? = fragmentBundler().initializer() ?: defaultValue()
+
+/**
  * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param initializer The initializer for providing an instance of the type parameter.
@@ -71,6 +99,18 @@ internal inline fun <reified T : Any> Fragment.fragmentNonNullTypedBundler(
   lazy(LazyThreadSafetyMode.NONE) {
     fragmentBundler().initializer()
   }
+
+/**
+ * Retrieves a primitive type of extended data from arguments immediately.
+ *
+ * @param initializer The initializer for providing an instance of the type parameter.
+ */
+@PublishedApi
+@JvmSynthetic
+@InlineBundleDsl
+internal inline fun <reified T : Any> Fragment.fragmentNonNullTypedBundlerValue(
+  crossinline initializer: Bundler.() -> T
+): T = fragmentBundler().initializer()
 
 /**
  * Retrieves a primitive type of extended data from arguments lazily.
@@ -90,6 +130,20 @@ internal inline fun <reified T : Any> Fragment.fragmentArrayBundler(
   }
 
 /**
+ * Retrieves a primitive type of extended data from arguments immediately.
+ *
+ * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
+ * @param initializer The initializer for providing an instance of the type parameter.
+ */
+@PublishedApi
+@JvmSynthetic
+@InlineBundleDsl
+internal inline fun <reified T : Any> Fragment.fragmentArrayBundlerValue(
+  crossinline defaultValue: () -> Array<T>? = { null },
+  crossinline initializer: Bundler.() -> Array<T>?
+): Array<T>? = fragmentBundler().initializer() ?: defaultValue()
+
+/**
  * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -105,3 +159,17 @@ internal inline fun <reified T : Any> Fragment.fragmentArrayListBundler(
   lazy(LazyThreadSafetyMode.NONE) {
     fragmentBundler().initializer() ?: defaultValue()
   }
+
+/**
+ * Retrieves a primitive type of extended data from arguments immediately.
+ *
+ * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
+ * @param initializer The initializer for providing an instance of the type parameter.
+ */
+@PublishedApi
+@JvmSynthetic
+@InlineBundleDsl
+internal inline fun <reified T : Any> Fragment.fragmentArrayListBundlerValue(
+  crossinline defaultValue: () -> ArrayList<T>? = { null },
+  crossinline initializer: Bundler.() -> ArrayList<T>?
+): ArrayList<T>? = fragmentBundler().initializer() ?: defaultValue()

@@ -35,6 +35,14 @@ dependencies {
     implementation "com.github.skydoves:bundler:1.0.4"
 }
 ```
+## SNAPSHOT 
+[![Bundler](https://img.shields.io/static/v1?label=snapshot&message=bundler&logo=apache%20maven&color=C71A36)](https://oss.sonatype.org/content/repositories/snapshots/com/github/skydoves/bundler/) <br>
+Snapshots of the current development version of Bundler are available, which track [the latest versions](https://oss.sonatype.org/content/repositories/snapshots/com/github/skydoves/bundler/).
+```Gradle
+repositories {
+   maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+}
+```
 
 ## Usage
 ### Intent

@@ -26,6 +26,9 @@ import com.skydoves.bundler.IntentLiveDataProvider.provideIntentLiveData
  * @author skydoves (Jaewoong Eum)
  *
  * Returns a [LiveData] which has a retrieved primitive type of extended data from the arguments.
+ * The implementation of the [LiveData] is a [SingleShotLiveData] that emits data only a single time to
+ * a single observer. We can observe only once using one observer. And the observer will be unregistered
+ * from the [SingleShotLiveData] after observing data at once.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -48,6 +51,9 @@ inline fun <reified T : Any> Fragment.observeBundle(
  * @author skydoves (Jaewoong Eum)
  *
  * Returns a [LiveData] which has a references primitive type of extended data from the arguments.
+ * The implementation of the [LiveData] is a [SingleShotLiveData] that emits data only a single time to
+ * a single observer. We can observe only once using one observer. And the observer will be unregistered
+ * from the [SingleShotLiveData] after observing data at once.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -70,6 +76,9 @@ inline fun <reified T : Any?> Fragment.observeBundle(
  * @author skydoves (Jaewoong Eum)
  *
  * Returns a [LiveData] which has a references array type of extended data from the arguments.
+ * The implementation of the [LiveData] is a [SingleShotLiveData] that emits data only a single time to
+ * a single observer. We can observe only once using one observer. And the observer will be unregistered
+ * from the [SingleShotLiveData] after observing data at once.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -92,6 +101,9 @@ inline fun <reified T : Any> Fragment.observeBundleArray(
  * @author skydoves (Jaewoong Eum)
  *
  * Returns a [LiveData] which has a references array list type of extended data from the arguments.
+ * The implementation of the [LiveData] is a [SingleShotLiveData] that emits data only a single time to
+ * a single observer. We can observe only once using one observer. And the observer will be unregistered
+ * from the [SingleShotLiveData] after observing data at once.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.

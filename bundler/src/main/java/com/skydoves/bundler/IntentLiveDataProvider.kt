@@ -18,7 +18,6 @@ package com.skydoves.bundler
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 
 /**
  * @author skydoves (Jaewoong Eum)
@@ -30,6 +29,9 @@ internal object IntentLiveDataProvider {
 
   /**
    * Provide a [LiveData] which has a primitive and references type of extended data from intent.
+   * The implementation of the [LiveData] is a [SingleShotLiveData] that emits data only a single time to
+   * a single observer. We can observe only once using one observer. And the observer will be unregistered
+   * from the [SingleShotLiveData] after observing data at once.
    *
    * @param initialValue An initial value for a new [LiveData].
    */
@@ -38,13 +40,14 @@ internal object IntentLiveDataProvider {
   internal inline fun <reified T : Any?> provideIntentLiveData(
     crossinline initialValue: () -> T?
   ): LiveData<T> {
-    return MutableLiveData<T>().apply {
-      value = initialValue()
-    }
+    return SingleShotLiveData<T>(initialValue())
   }
 
   /**
    * Provide a [LiveData] which has a references array type of extended data from intent.
+   * The implementation of the [LiveData] is a [SingleShotLiveData] that emits data only a single time to
+   * a single observer. We can observe only once using one observer. And the observer will be unregistered
+   * from the [SingleShotLiveData] after observing data at once.
    *
    * @param initialValue An initial value for a new [LiveData].
    */
@@ -53,13 +56,14 @@ internal object IntentLiveDataProvider {
   internal inline fun <reified T : Any> provideArrayIntentLiveData(
     crossinline initialValue: () -> Array<T>?
   ): LiveData<Array<T>> {
-    return MutableLiveData<Array<T>>().apply {
-      value = initialValue()
-    }
+    return SingleShotLiveData<Array<T>>(initialValue())
   }
 
   /**
    * Provide a [LiveData] which has a references array list type of extended data from intent.
+   * The implementation of the [LiveData] is a [SingleShotLiveData] that emits data only a single time to
+   * a single observer. We can observe only once using one observer. And the observer will be unregistered
+   * from the [SingleShotLiveData] after observing data at once.
    *
    * @param initialValue An initial value for a new [LiveData].
    */
@@ -68,8 +72,6 @@ internal object IntentLiveDataProvider {
   internal inline fun <reified T : Any> provideArrayListIntentLiveData(
     crossinline initialValue: () -> ArrayList<T>?
   ): LiveData<ArrayList<T>> {
-    return MutableLiveData<ArrayList<T>>().apply {
-      value = initialValue()
-    }
+    return SingleShotLiveData<ArrayList<T>>(initialValue())
   }
 }

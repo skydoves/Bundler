@@ -26,8 +26,9 @@ import java.util.concurrent.atomic.AtomicBoolean
 /**
  * @author skydoves (Jaewoong Eum)
  *
- * SingleShotLiveData is an implementation of the [MutableLiveData] for emitting [T] data
- * single time to a single observer.
+ * SingleShotLiveData is an implementation of the [MutableLiveData] that emits [T] data
+ * only a single time to a single observer. We can observe only once using one observer.
+ * And the observer will be unregistered from the [SingleShotLiveData] after observing data at once.
  */
 @PublishedApi
 internal class SingleShotLiveData<T> constructor(
@@ -51,7 +52,7 @@ internal class SingleShotLiveData<T> constructor(
         }
       )
     } else {
-      Log.i(TAG, "OneShotLiveData data already has been emitted.")
+      Log.i(TAG, "SingleShotLiveData already has been emitted data.")
     }
   }
 
@@ -63,7 +64,7 @@ internal class SingleShotLiveData<T> constructor(
         removeObserver(observer)
       }
     } else {
-      Log.i(TAG, "OneShotLiveData data already has been emitted.")
+      Log.i(TAG, "SingleShotLiveData already has been emitted data.")
     }
   }
 
@@ -72,7 +73,7 @@ internal class SingleShotLiveData<T> constructor(
     if (!emitted.get()) {
       super.setValue(value)
     } else {
-      Log.i(TAG, "OneShotLiveData data already has been emitted.")
+      Log.i(TAG, "SingleShotLiveData already has been emitted data.")
     }
   }
 
@@ -80,11 +81,11 @@ internal class SingleShotLiveData<T> constructor(
     if (!emitted.get()) {
       super.postValue(value)
     } else {
-      Log.i(TAG, "OneShotLiveData data already has been emitted.")
+      Log.i(TAG, "SingleShotLiveData already has been emitted data.")
     }
   }
 
   companion object {
-    private const val TAG = "OneShotLiveData"
+    private const val TAG = "SingleShotLiveData"
   }
 }

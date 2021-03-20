@@ -20,6 +20,7 @@ import android.content.Intent
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.skydoves.bundler.data.Poster
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
@@ -45,6 +46,26 @@ class ActivityBundleObserveLazyTest {
     intLiveData.observeForever(intObserver)
 
     verify(intObserver).onChanged(123)
+  }
+
+  @Test
+  fun observeBundleLazyTwiceTest() {
+    val activity = TestActivity()
+    activity.intent = intentOf {
+      putExtra("int", 123)
+    }
+
+    val intLiveData by activity.observeBundle("int", 0)
+
+    val intObserver0 = mock<Observer<Int>>()
+    intLiveData.observeForever(intObserver0)
+
+    verify(intObserver0).onChanged(123)
+
+    val intObserver1 = mock<Observer<Int>>()
+    intLiveData.observeForever(intObserver1)
+
+    verifyNoMoreInteractions(intObserver1)
   }
 
   @Test

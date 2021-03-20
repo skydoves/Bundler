@@ -105,7 +105,7 @@ or
 private val posterArray by bundleArray<Poster>("posterArray") { arrayOf() }
 private val posterListArray by bundleArrayList<Poster>("posterArrayList") { arrayListOf() }
 ```
-### Fragment
+### bundle in Fragment
 The below example shows setting arguments using the `intentOf` expression.
 ```kotlin
 arguments = intentOf {
@@ -130,8 +130,7 @@ The `bundle` expression for initializing objects (e.g. Bundle, CharSequence, Par
 ```
 
 ### observeBundle
-We can observe the bundle data as LiveData using the `observeBundle` expression.<br>
-If there are no extra & arguments in the Activity or Fragment, `null` will be passed to the observers.
+We can observe the bundle data as `LiveData` using the `observeBundle` expression. If there are no extra & arguments in the Activity or Fragment, `null` will be passed to the observers. The `observeBundle` emits data only a single time to a single observer. So We can observe only once using one observer. And the observer will be unregistered from the LiveData after observing data at once.
 ```kotlin
 private val id: LiveData<Long> by observeBundle("id", -1L)
 private val poster: LiveData<Poster> by observeBundle("poster")
@@ -143,6 +142,15 @@ id.observe(this) {
 poster.observe(this) {
   binding.name = it.name
 }
+```
+
+### observeValue
+We can also retrieve intent & arguments extra values from Activity and Fragment immediately. We can use `bundleValue`, `bundleNonNullValue`, `bundleArrayValue`, `bundleArrayListValue`.
+
+```kotlin
+val id = bundleValue("id", 100L)
+val name = bundleValue("name", "")
+val poster = bundleValue<Poster>("poster")
 ```
 
 ## Find this library useful? :heart:

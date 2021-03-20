@@ -36,21 +36,23 @@ import java.io.Serializable
 @JvmSynthetic
 @InlineBundleDsl
 inline fun <reified T : Any> Activity.bundleValue(key: String, defaultValue: T): T {
-  return when (defaultValue) {
-    is Boolean -> intent.getBooleanExtra(key, defaultValue)
-    is Byte -> intent.getByteExtra(key, defaultValue)
-    is Char -> intent.getCharExtra(key, defaultValue)
-    is Double -> intent.getDoubleExtra(key, defaultValue)
-    is Float -> intent.getFloatExtra(key, defaultValue)
-    is Int -> intent.getIntExtra(key, defaultValue)
-    is Long -> intent.getLongExtra(key, defaultValue)
-    is Short -> intent.getShortExtra(key, defaultValue)
-    is CharSequence -> intent.getStringExtra(key) ?: defaultValue.toString()
+  return activityVariableBundlerValue(defaultValue) {
+    when (defaultValue) {
+      is Boolean -> intent.getBooleanExtra(key, defaultValue)
+      is Byte -> intent.getByteExtra(key, defaultValue)
+      is Char -> intent.getCharExtra(key, defaultValue)
+      is Double -> intent.getDoubleExtra(key, defaultValue)
+      is Float -> intent.getFloatExtra(key, defaultValue)
+      is Int -> intent.getIntExtra(key, defaultValue)
+      is Long -> intent.getLongExtra(key, defaultValue)
+      is Short -> intent.getShortExtra(key, defaultValue)
+      is CharSequence -> intent.getStringExtra(key)
 
-    else -> throw IllegalArgumentException(
-      "Illegal value type ${defaultValue.javaClass} for key \"$key\""
-    )
-  } as T
+      else -> throw IllegalArgumentException(
+        "Illegal value type ${defaultValue.javaClass} for key \"$key\""
+      )
+    } as T?
+  }
 }
 
 /**
@@ -70,31 +72,35 @@ inline fun <reified T : Any> Activity.bundleValue(
   crossinline defaultValue: () -> T? = { null }
 ): T? {
   val objectType = T::class.javaObjectType
-  return when {
-    // references
-    Bundle::class.java.isAssignableFrom(objectType) -> intent.getBundleExtra(key) as? T
-    CharSequence::class.java.isAssignableFrom(objectType) -> intent.getCharSequenceExtra(key) as? T
-    Parcelable::class.java.isAssignableFrom(objectType) -> intent.getParcelableExtra<Parcelable>(
-      key
-    ) as? T
-    Serializable::class.java.isAssignableFrom(objectType) -> intent.getSerializableExtra(
-      key
-    ) as? T
+  return activityTypedBundlerValue(defaultValue) {
+    when {
+      // references
+      Bundle::class.java.isAssignableFrom(objectType) -> intent.getBundleExtra(key) as? T
+      CharSequence::class.java.isAssignableFrom(objectType) -> intent.getCharSequenceExtra(
+        key
+      ) as? T
+      Parcelable::class.java.isAssignableFrom(objectType) -> intent.getParcelableExtra<Parcelable>(
+        key
+      ) as? T
+      Serializable::class.java.isAssignableFrom(objectType) -> intent.getSerializableExtra(
+        key
+      ) as? T
 
-    // scalar arrays
-    BooleanArray::class.java.isAssignableFrom(objectType) -> intent.getBooleanArrayExtra(
-      key
-    ) as? T
-    ByteArray::class.java.isAssignableFrom(objectType) -> intent.getByteArrayExtra(key) as? T
-    CharArray::class.java.isAssignableFrom(objectType) -> intent.getCharArrayExtra(key) as? T
-    DoubleArray::class.java.isAssignableFrom(objectType) -> intent.getDoubleArrayExtra(key) as? T
-    FloatArray::class.java.isAssignableFrom(objectType) -> intent.getFloatArrayExtra(key) as? T
-    IntArray::class.java.isAssignableFrom(objectType) -> intent.getIntArrayExtra(key) as? T
-    LongArray::class.java.isAssignableFrom(objectType) -> intent.getLongArrayExtra(key) as? T
-    ShortArray::class.java.isAssignableFrom(objectType) -> intent.getShortArrayExtra(key) as? T
+      // scalar arrays
+      BooleanArray::class.java.isAssignableFrom(objectType) -> intent.getBooleanArrayExtra(
+        key
+      ) as? T
+      ByteArray::class.java.isAssignableFrom(objectType) -> intent.getByteArrayExtra(key) as? T
+      CharArray::class.java.isAssignableFrom(objectType) -> intent.getCharArrayExtra(key) as? T
+      DoubleArray::class.java.isAssignableFrom(objectType) -> intent.getDoubleArrayExtra(key) as? T
+      FloatArray::class.java.isAssignableFrom(objectType) -> intent.getFloatArrayExtra(key) as? T
+      IntArray::class.java.isAssignableFrom(objectType) -> intent.getIntArrayExtra(key) as? T
+      LongArray::class.java.isAssignableFrom(objectType) -> intent.getLongArrayExtra(key) as? T
+      ShortArray::class.java.isAssignableFrom(objectType) -> intent.getShortArrayExtra(key) as? T
 
-    else -> throw IllegalArgumentException("Illegal value type $objectType for key \"$key\"")
-  } ?: defaultValue()
+      else -> throw IllegalArgumentException("Illegal value type $objectType for key \"$key\"")
+    }
+  }
 }
 
 /**
@@ -113,30 +119,32 @@ inline fun <reified T : Any> Activity.bundleNonNullValue(
   key: String
 ): T {
   val objectType = T::class.javaObjectType
-  return when {
-    // references
-    Bundle::class.java.isAssignableFrom(objectType) -> intent.getBundleExtra(key) as T
-    CharSequence::class.java.isAssignableFrom(objectType) -> intent.getCharSequenceExtra(key) as T
-    Parcelable::class.java.isAssignableFrom(objectType) -> intent.getParcelableExtra<Parcelable>(
-      key
-    ) as T
-    Serializable::class.java.isAssignableFrom(objectType) -> intent.getSerializableExtra(
-      key
-    ) as T
+  return activityNonNullTypedBundlerValue {
+    when {
+      // references
+      Bundle::class.java.isAssignableFrom(objectType) -> intent.getBundleExtra(key) as T
+      CharSequence::class.java.isAssignableFrom(objectType) -> intent.getCharSequenceExtra(key) as T
+      Parcelable::class.java.isAssignableFrom(objectType) -> intent.getParcelableExtra<Parcelable>(
+        key
+      ) as T
+      Serializable::class.java.isAssignableFrom(objectType) -> intent.getSerializableExtra(
+        key
+      ) as T
 
-    // scalar arrays
-    BooleanArray::class.java.isAssignableFrom(objectType) -> intent.getBooleanArrayExtra(
-      key
-    ) as T
-    ByteArray::class.java.isAssignableFrom(objectType) -> intent.getByteArrayExtra(key) as T
-    CharArray::class.java.isAssignableFrom(objectType) -> intent.getCharArrayExtra(key) as T
-    DoubleArray::class.java.isAssignableFrom(objectType) -> intent.getDoubleArrayExtra(key) as T
-    FloatArray::class.java.isAssignableFrom(objectType) -> intent.getFloatArrayExtra(key) as T
-    IntArray::class.java.isAssignableFrom(objectType) -> intent.getIntArrayExtra(key) as T
-    LongArray::class.java.isAssignableFrom(objectType) -> intent.getLongArrayExtra(key) as T
-    ShortArray::class.java.isAssignableFrom(objectType) -> intent.getShortArrayExtra(key) as T
+      // scalar arrays
+      BooleanArray::class.java.isAssignableFrom(objectType) -> intent.getBooleanArrayExtra(
+        key
+      ) as T
+      ByteArray::class.java.isAssignableFrom(objectType) -> intent.getByteArrayExtra(key) as T
+      CharArray::class.java.isAssignableFrom(objectType) -> intent.getCharArrayExtra(key) as T
+      DoubleArray::class.java.isAssignableFrom(objectType) -> intent.getDoubleArrayExtra(key) as T
+      FloatArray::class.java.isAssignableFrom(objectType) -> intent.getFloatArrayExtra(key) as T
+      IntArray::class.java.isAssignableFrom(objectType) -> intent.getIntArrayExtra(key) as T
+      LongArray::class.java.isAssignableFrom(objectType) -> intent.getLongArrayExtra(key) as T
+      ShortArray::class.java.isAssignableFrom(objectType) -> intent.getShortArrayExtra(key) as T
 
-    else -> throw IllegalArgumentException("Illegal value type $objectType for key \"$key\"")
+      else -> throw IllegalArgumentException("Illegal value type $objectType for key \"$key\"")
+    }
   }
 }
 
@@ -157,17 +165,23 @@ inline fun <reified T : Any> Activity.bundleArrayValue(
   crossinline defaultValue: () -> Array<T>? = { null }
 ): Array<T>? {
   val javaObjectType = T::class.javaObjectType
-  return (
-    when {
-      String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayExtra(key)
-      CharSequence::class.java.isAssignableFrom(javaObjectType) -> intent.getCharSequenceArrayExtra(
-        key
-      )
-      Parcelable::class.java.isAssignableFrom(javaObjectType) -> intent.getParcelableArrayExtra(key)
+  return activityArrayBundlerValue(defaultValue) {
+    (
+      when {
+        String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayExtra(key)
+        CharSequence::class.java.isAssignableFrom(
+          javaObjectType
+        ) -> intent.getCharSequenceArrayExtra(key)
+        Parcelable::class.java.isAssignableFrom(javaObjectType) -> intent.getParcelableArrayExtra(
+          key
+        )
 
-      else -> throw IllegalArgumentException("Illegal value type $javaObjectType for key \"$key\"")
-    } as? Array<*>
-    )?.filterIsInstance<T>()?.toTypedArray() ?: defaultValue()
+        else -> throw IllegalArgumentException(
+          "Illegal value type $javaObjectType for key \"$key\""
+        )
+      } as? Array<*>
+      )?.filterIsInstance<T>()?.toTypedArray()
+  }
 }
 
 /**
@@ -187,15 +201,17 @@ inline fun <reified T : Any> Activity.bundleArrayListValue(
   crossinline defaultValue: () -> ArrayList<T>? = { null }
 ): ArrayList<T>? {
   val javaObjectType = T::class.javaObjectType
-  return when {
-    String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayListExtra(key)
-    CharSequence::class.java.isAssignableFrom(
-      javaObjectType
-    ) -> intent.getCharSequenceArrayListExtra(key)
-    Parcelable::class.java.isAssignableFrom(
-      javaObjectType
-    ) -> intent.getParcelableArrayListExtra<Parcelable>(key)
+  return activityArrayListBundlerValue(defaultValue) {
+    when {
+      String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayListExtra(key)
+      CharSequence::class.java.isAssignableFrom(
+        javaObjectType
+      ) -> intent.getCharSequenceArrayListExtra(key)
+      Parcelable::class.java.isAssignableFrom(
+        javaObjectType
+      ) -> intent.getParcelableArrayListExtra<Parcelable>(key)
 
-    else -> throw IllegalArgumentException("Illegal value type $javaObjectType for key \"$key\"")
-  } as ArrayList<T>? ?: defaultValue()
+      else -> throw IllegalArgumentException("Illegal value type $javaObjectType for key \"$key\"")
+    } as ArrayList<T>?
+  }
 }

@@ -33,7 +33,7 @@ import org.robolectric.annotation.Config
 class ActivityBundleValueTest {
 
   @Test
-  fun bundleLazyTest() {
+  fun bundleValueTest() {
     val activity = TestActivity()
     activity.intent = Intent().apply {
       putExtra("boolean", true)
@@ -76,7 +76,7 @@ class ActivityBundleValueTest {
   }
 
   @Test
-  fun bundleLazyDefaultValueTest() {
+  fun bundleValueDefaultValueTest() {
     val activity = TestActivity()
     activity.intent = Intent()
 
@@ -109,7 +109,7 @@ class ActivityBundleValueTest {
   }
 
   @Test(expected = IllegalArgumentException::class)
-  fun bundleLazyWrongTypeExceptionTest() {
+  fun bundleValueWrongTypeExceptionTest() {
     val mock = Poster.create()
     val activity = TestActivity()
     activity.intent = Intent().apply {
@@ -121,7 +121,7 @@ class ActivityBundleValueTest {
   }
 
   @Test
-  fun bundleReferenceLazyTest() {
+  fun bundleReferenceValueTest() {
     val activity = TestActivity()
     activity.intent = Intent().apply {
       val poster = Poster.create()
@@ -175,7 +175,7 @@ class ActivityBundleValueTest {
   }
 
   @Test
-  fun bundleReferenceLazyDefaultValueTest() {
+  fun bundleReferenceValueDefaultValueTest() {
     val activity = TestActivity()
     activity.intent = Intent()
     val poster = Poster.create()
@@ -221,7 +221,7 @@ class ActivityBundleValueTest {
   }
 
   @Test(expected = IllegalArgumentException::class)
-  fun bundleReferenceLazyWrongTypeExceptionTest() {
+  fun bundleReferenceValueWrongTypeExceptionTest() {
     val activity = TestActivity()
     activity.intent = Intent()
 
@@ -230,7 +230,7 @@ class ActivityBundleValueTest {
   }
 
   @Test
-  fun bundleNonNullReferenceLazyTest() {
+  fun bundleNonNullReferenceValueTest() {
     val activity = TestActivity()
     activity.intent = Intent().apply {
       val poster = Poster.create()
@@ -284,7 +284,7 @@ class ActivityBundleValueTest {
   }
 
   @Test(expected = java.lang.IllegalArgumentException::class)
-  fun bundleNonNullReferenceLazyWrongTypeExceptionTest() {
+  fun bundleNonNullReferenceValueWrongTypeExceptionTest() {
     val activity = TestActivity()
     activity.intent = Intent()
 
@@ -293,7 +293,7 @@ class ActivityBundleValueTest {
   }
 
   @Test(expected = NullPointerException::class)
-  fun bundleNonNullReferenceLazyNoValueIncludedExceptionTest() {
+  fun bundleNonNullReferenceValueNoValueIncludedExceptionTest() {
     val activity = TestActivity()
     activity.intent = Intent()
 
@@ -302,7 +302,7 @@ class ActivityBundleValueTest {
   }
 
   @Test
-  fun bundleArrayLazyTest() {
+  fun bundleArrayValueTest() {
     val activity = TestActivity()
     val poster = Poster.create()
     activity.intent = Intent().apply {
@@ -325,7 +325,7 @@ class ActivityBundleValueTest {
   }
 
   @Test
-  fun bundleArrayLazyDefaultValueTest() {
+  fun bundleArrayValueDefaultValueTest() {
     val activity = TestActivity()
     activity.intent = Intent()
     val poster = Poster.create()
@@ -350,7 +350,7 @@ class ActivityBundleValueTest {
   }
 
   @Test(expected = IllegalArgumentException::class)
-  fun bundleArrayLazyWrongTypeExceptionTest() {
+  fun bundleArrayValueWrongTypeExceptionTest() {
     val activity = TestActivity()
     activity.intent = Intent()
 
@@ -359,7 +359,7 @@ class ActivityBundleValueTest {
   }
 
   @Test
-  fun bundleArrayListLazyTest() {
+  fun bundleArrayListValueTest() {
     val activity = TestActivity()
     val poster = Poster.create()
     activity.intent = Intent().apply {
@@ -382,7 +382,7 @@ class ActivityBundleValueTest {
   }
 
   @Test
-  fun bundleArrayLsitLazyDefaultValueTest() {
+  fun bundleArrayLsitValueDefaultValueTest() {
     val activity = TestActivity()
     activity.intent = Intent()
     val poster = Poster.create()
@@ -407,7 +407,7 @@ class ActivityBundleValueTest {
   }
 
   @Test(expected = IllegalArgumentException::class)
-  fun bundleArrayListLazyWrongTypeExceptionTest() {
+  fun bundleArrayListValueWrongTypeExceptionTest() {
     val activity = TestActivity()
     activity.intent = Intent()
 

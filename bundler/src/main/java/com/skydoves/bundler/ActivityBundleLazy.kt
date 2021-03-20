@@ -24,6 +24,8 @@ import android.os.Parcelable
 import java.io.Serializable
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a primitive type of extended data from the Intent lazily.
  *
  * @param key The name of the desired item.
@@ -54,6 +56,8 @@ inline fun <reified T : Any> Activity.bundle(key: String, defaultValue: T): Lazy
 }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references type of extended data from the Intent lazily.
  *
  * @param key The name of the desired item.
@@ -98,6 +102,8 @@ inline fun <reified T : Any> Activity.bundle(
 }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a non-null references type of extended data from the Intent lazily.
  *
  * @param key The name of the desired item.
@@ -141,6 +147,8 @@ inline fun <reified T : Any> Activity.bundleNonNull(
 }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references array type of extended data from the Intent lazily.
  *
  * @param key The name of the desired item.
@@ -169,6 +177,8 @@ inline fun <reified T : Any> Activity.bundleArray(
 }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references array list type of extended data from the Intent lazily.
  *
  * @param key The name of the desired item.

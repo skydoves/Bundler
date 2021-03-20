@@ -27,6 +27,8 @@ import kotlin.reflect.KClass
 internal annotation class InlineIntentOnly
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Creates an instance of the intent.
  *
  * @param block A lambda domain scope of the [Bundler].

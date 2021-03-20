@@ -23,6 +23,8 @@ import com.skydoves.bundler.IntentLiveDataProvider.provideArrayListIntentLiveDat
 import com.skydoves.bundler.IntentLiveDataProvider.provideIntentLiveData
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Returns a [LiveData] which has a retrieved primitive type of extended data from the Intent.
  *
  * @param key The name of the desired item.
@@ -43,6 +45,8 @@ inline fun <reified T : Any> Activity.observeBundle(
 }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Returns a [LiveData] which has a references primitive type of extended data from the Intent.
  *
  * @param key The name of the desired item.
@@ -63,6 +67,8 @@ inline fun <reified T : Any?> Activity.observeBundle(
 }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Returns a [LiveData] which has a references array type of extended data from the Intent.
  *
  * @param key The name of the desired item.
@@ -83,6 +89,8 @@ inline fun <reified T : Any> Activity.observeBundleArray(
 }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Returns a [LiveData] which has a references array list type of extended data from the Intent.
  *
  * @param key The name of the desired item.

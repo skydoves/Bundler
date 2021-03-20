@@ -24,6 +24,8 @@ import androidx.fragment.app.Fragment
 import java.io.Serializable
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param key The name of the desired item.
@@ -54,6 +56,8 @@ inline fun <reified T : Any> Fragment.bundle(key: String, defaultValue: T): Lazy
 }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references type of extended data from arguments lazily.
  *
  * @param key The name of the desired item.
@@ -98,6 +102,8 @@ inline fun <reified T : Any> Fragment.bundle(
 }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references type of extended data from arguments lazily.
  *
  * @param key The name of the desired item.
@@ -141,6 +147,8 @@ inline fun <reified T : Any> Fragment.bundleNonNull(
 }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references array type of extended data from arguments lazily.
  *
  * @param key The name of the desired item.
@@ -169,6 +177,8 @@ inline fun <reified T : Any> Fragment.bundleArray(
 }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references array list type of extended data from arguments lazily.
  *
  * @param key The name of the desired item.

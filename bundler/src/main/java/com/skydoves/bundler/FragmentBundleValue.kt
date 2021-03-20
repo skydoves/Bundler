@@ -77,7 +77,8 @@ inline fun <reified T : Any> Fragment.bundleValue(
       // references
       Bundle::class.java.isAssignableFrom(objectType) -> intent.getBundleExtra(key) as? T
       CharSequence::class.java.isAssignableFrom(objectType) -> intent.getCharSequenceExtra(
-        key) as? T
+        key
+      ) as? T
       Parcelable::class.java.isAssignableFrom(objectType) -> intent.getParcelableExtra<Parcelable>(
         key
       ) as? T
@@ -169,12 +170,15 @@ inline fun <reified T : Any> Fragment.bundleArrayValue(
       when {
         String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayExtra(key)
         CharSequence::class.java.isAssignableFrom(
-          javaObjectType) -> intent.getCharSequenceArrayExtra(key)
+          javaObjectType
+        ) -> intent.getCharSequenceArrayExtra(key)
         Parcelable::class.java.isAssignableFrom(javaObjectType) -> intent.getParcelableArrayExtra(
-          key)
+          key
+        )
 
         else -> throw IllegalArgumentException(
-          "Illegal value type $javaObjectType for key \"$key\"")
+          "Illegal value type $javaObjectType for key \"$key\""
+        )
       }
       )?.filterIsInstance<T>()?.toTypedArray()
   }

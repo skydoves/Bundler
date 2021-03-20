@@ -19,6 +19,8 @@ package com.skydoves.bundler
 import android.app.Activity
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Returns an instance of a bundler that has the the Intent of an Activity.
  *
  * @throws NullPointerException when the Activity does not contain any Intent.
@@ -26,6 +28,8 @@ import android.app.Activity
 fun Activity.activityBundler(): Bundler = Bundler(intent)
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a primitive type of extended data from the Intent lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -43,6 +47,8 @@ internal inline fun <reified T : Any> Activity.activityVariableBundler(
   }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a primitive type of extended data from the Intent immediately.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -57,6 +63,8 @@ internal inline fun <reified T : Any> Activity.activityVariableBundlerValue(
 ): T = activityBundler().initializer() ?: defaultValue
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references type of extended data from the Intent lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -74,6 +82,8 @@ internal inline fun <reified T : Any> Activity.activityTypedBundler(
   }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references type of extended data from the Intent immediately.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -88,6 +98,8 @@ internal inline fun <reified T : Any> Activity.activityTypedBundlerValue(
 ): T? = activityBundler().initializer() ?: defaultValue()
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references type of extended data from the Intent lazily.
  *
  * @param initializer The initializer for providing a non-null instance of the type parameter.
@@ -103,6 +115,8 @@ internal inline fun <reified T : Any> Activity.activityNonNullTypedBundler(
   }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references type of extended data from the Intent immediately.
  *
  * @param initializer The initializer for providing a non-null instance of the type parameter.
@@ -115,6 +129,8 @@ internal inline fun <reified T : Any> Activity.activityNonNullTypedBundlerValue(
 ): T = activityBundler().initializer()
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references array type of extended data from the Intent lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -132,6 +148,8 @@ internal inline fun <reified T : Any> Activity.activityArrayBundler(
   }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references array type of extended data from the Intent immediately.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -146,6 +164,8 @@ internal inline fun <reified T : Any> Activity.activityArrayBundlerValue(
 ): Array<T>? = activityBundler().initializer() ?: defaultValue()
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references array list type of extended data from the Intent  lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -163,6 +183,8 @@ internal inline fun <reified T : Any> Activity.activityArrayListBundler(
   }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references array list type of extended data from the Intent  lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.

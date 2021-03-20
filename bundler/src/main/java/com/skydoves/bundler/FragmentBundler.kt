@@ -19,11 +19,15 @@ package com.skydoves.bundler
 import androidx.fragment.app.Fragment
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Returns an instance of a bundler that has the arguments of a fragment.
  */
 fun Fragment.fragmentBundler(): Bundler = Bundler().replaceExtras(arguments)
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -41,6 +45,8 @@ internal inline fun <reified T : Any> Fragment.fragmentVariableBundler(
   }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a primitive type of extended data from arguments immediately.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -55,6 +61,8 @@ internal inline fun <reified T : Any> Fragment.fragmentVariableBundlerValue(
 ): T = fragmentBundler().initializer() ?: defaultValue
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -72,6 +80,8 @@ internal inline fun <reified T : Any> Fragment.fragmentTypedBundler(
   }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a primitive type of extended data from arguments immediately.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -86,6 +96,8 @@ internal inline fun <reified T : Any> Fragment.fragmentTypedBundlerValue(
 ): T? = fragmentBundler().initializer() ?: defaultValue()
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param initializer The initializer for providing an instance of the type parameter.
@@ -101,6 +113,8 @@ internal inline fun <reified T : Any> Fragment.fragmentNonNullTypedBundler(
   }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a primitive type of extended data from arguments immediately.
  *
  * @param initializer The initializer for providing an instance of the type parameter.
@@ -113,6 +127,8 @@ internal inline fun <reified T : Any> Fragment.fragmentNonNullTypedBundlerValue(
 ): T = fragmentBundler().initializer()
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -130,6 +146,8 @@ internal inline fun <reified T : Any> Fragment.fragmentArrayBundler(
   }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a primitive type of extended data from arguments immediately.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -144,6 +162,8 @@ internal inline fun <reified T : Any> Fragment.fragmentArrayBundlerValue(
 ): Array<T>? = fragmentBundler().initializer() ?: defaultValue()
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a primitive type of extended data from arguments lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -161,6 +181,8 @@ internal inline fun <reified T : Any> Fragment.fragmentArrayListBundler(
   }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a primitive type of extended data from arguments immediately.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.

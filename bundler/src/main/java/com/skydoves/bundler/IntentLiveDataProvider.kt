@@ -20,7 +20,11 @@ import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
-/** A provider for providing [LiveData] which has the desired intent data.*/
+/**
+ * @author skydoves (Jaewoong Eum)
+ *
+ * A provider for providing [LiveData] which has the desired intent data.
+ */
 @PublishedApi
 internal object IntentLiveDataProvider {
 

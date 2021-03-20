@@ -55,6 +55,20 @@ class ActivityBundlerTest {
   }
 
   @Test
+  fun activityVariableBundlerValueTest() {
+    val activity = TestActivity()
+    activity.intent = intentOf {
+      putExtra("name", "skydoves")
+    }
+
+    val name = activity.activityVariableBundlerValue("skydoves") {
+      intent.getStringExtra("name")
+    }
+
+    assertThat(name, `is`("skydoves"))
+  }
+
+  @Test
   fun activityTypedBundlerTest() {
     val activity = TestActivity()
     activity.intent = intentOf {
@@ -62,6 +76,20 @@ class ActivityBundlerTest {
     }
 
     val poster by activity.activityTypedBundler {
+      intent.getParcelableExtra("poster") as? Poster
+    }
+
+    assertThat(poster, `is`(Poster.create()))
+  }
+
+  @Test
+  fun activityTypedBundlerValueTest() {
+    val activity = TestActivity()
+    activity.intent = intentOf {
+      putExtra("poster", Poster.create())
+    }
+
+    val poster = activity.activityTypedBundlerValue {
       intent.getParcelableExtra("poster") as? Poster
     }
 
@@ -83,6 +111,20 @@ class ActivityBundlerTest {
   }
 
   @Test
+  fun activityNonNullTypedBundlerValueTest() {
+    val activity = TestActivity()
+    activity.intent = intentOf {
+      putExtra("poster", Poster.create())
+    }
+
+    val poster = activity.activityNonNullTypedBundlerValue {
+      intent.getParcelableExtra("poster")!!
+    }
+
+    assertThat(poster, `is`(Poster.create()))
+  }
+
+  @Test
   @Suppress("UNCHECKED_CAST")
   fun activityArrayBundlerTest() {
     val activity = TestActivity()
@@ -92,7 +134,25 @@ class ActivityBundlerTest {
       putExtra("posterArray", arrayOf(poster, poster, poster))
     }
 
-    val posterArray by activity.activityArrayBundler<Poster> {
+    val posterArray by activity.activityArrayBundler {
+      intent.getParcelableArrayExtra("posterArray") as? Array<Poster>
+    }
+
+    assertThat(posterArray?.size, `is`(3))
+    assertThat(posterArray?.get(0), `is`(poster))
+  }
+
+  @Test
+  @Suppress("UNCHECKED_CAST")
+  fun activityArrayBundlerValueTest() {
+    val activity = TestActivity()
+    val poster = Poster.create()
+
+    activity.intent = intentOf {
+      putExtra("posterArray", arrayOf(poster, poster, poster))
+    }
+
+    val posterArray = activity.activityArrayBundlerValue {
       intent.getParcelableArrayExtra("posterArray") as? Array<Poster>
     }
 
@@ -110,6 +170,23 @@ class ActivityBundlerTest {
     }
 
     val posterArrayList by activity.activityArrayListBundler<Poster> {
+      intent.getParcelableArrayListExtra("posterArrayList")
+    }
+
+    assertThat(posterArrayList?.size, `is`(3))
+    assertThat(posterArrayList?.get(0), `is`(poster))
+  }
+
+  @Test
+  fun activityArrayListBundlerValueTest() {
+    val activity = TestActivity()
+    val poster = Poster.create()
+
+    activity.intent = intentOf {
+      putExtra("posterArrayList", arrayListOf(poster, poster, poster))
+    }
+
+    val posterArrayList = activity.activityArrayListBundlerValue<Poster> {
       intent.getParcelableArrayListExtra("posterArrayList")
     }
 

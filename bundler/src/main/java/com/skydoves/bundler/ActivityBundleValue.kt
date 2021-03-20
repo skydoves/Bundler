@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-@file:Suppress("UNCHECKED_CAST", "unused")
+@file:Suppress("UNCHECKED_CAST")
 
 package com.skydoves.bundler
 
+import android.app.Activity
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.fragment.app.Fragment
 import java.io.Serializable
 
 /**
  * @author skydoves (Jaewoong Eum)
  *
- * Retrieves a primitive type of extended data from arguments lazily.
+ * Retrieves a primitive type of extended data from the Intent immediately.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -35,8 +35,8 @@ import java.io.Serializable
  */
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Fragment.bundle(key: String, defaultValue: T): Lazy<T> {
-  return fragmentVariableBundler(defaultValue) {
+inline fun <reified T : Any> Activity.bundleValue(key: String, defaultValue: T): T {
+  return activityVariableBundlerValue(defaultValue) {
     when (defaultValue) {
       is Boolean -> intent.getBooleanExtra(key, defaultValue)
       is Byte -> intent.getByteExtra(key, defaultValue)
@@ -51,14 +51,14 @@ inline fun <reified T : Any> Fragment.bundle(key: String, defaultValue: T): Lazy
       else -> throw IllegalArgumentException(
         "Illegal value type ${defaultValue.javaClass} for key \"$key\""
       )
-    } as? T
+    } as T?
   }
 }
 
 /**
  * @author skydoves (Jaewoong Eum)
  *
- * Retrieves a references type of extended data from arguments lazily.
+ * Retrieves a references type of extended data from the Intent immediately.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -67,16 +67,18 @@ inline fun <reified T : Any> Fragment.bundle(key: String, defaultValue: T): Lazy
  */
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Fragment.bundle(
+inline fun <reified T : Any> Activity.bundleValue(
   key: String,
   crossinline defaultValue: () -> T? = { null }
-): Lazy<T?> {
+): T? {
   val objectType = T::class.javaObjectType
-  return fragmentTypedBundler(defaultValue) {
+  return activityTypedBundlerValue(defaultValue) {
     when {
       // references
       Bundle::class.java.isAssignableFrom(objectType) -> intent.getBundleExtra(key) as? T
-      CharSequence::class.java.isAssignableFrom(objectType) -> intent.getCharSequenceExtra(key) as? T
+      CharSequence::class.java.isAssignableFrom(objectType) -> intent.getCharSequenceExtra(
+        key
+      ) as? T
       Parcelable::class.java.isAssignableFrom(objectType) -> intent.getParcelableExtra<Parcelable>(
         key
       ) as? T
@@ -104,20 +106,20 @@ inline fun <reified T : Any> Fragment.bundle(
 /**
  * @author skydoves (Jaewoong Eum)
  *
- * Retrieves a references type of extended data from arguments lazily.
+ * Retrieves a non-null references type of extended data from the Intent immediately.
  *
  * @param key The name of the desired item.
  *
- * @throws IllegalArgumentException When a value is not a supported type of [Bundle].
- * @exception NullPointerException When there is no desired value from the arguments.
+ * @throws IllegalArgumentException When a value is not a supported type of [Bundle] or null.
+ * @exception NullPointerException When there is no desired value from the Intent.
  */
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Fragment.bundleNonNull(
+inline fun <reified T : Any> Activity.bundleNonNullValue(
   key: String
-): Lazy<T> {
+): T {
   val objectType = T::class.javaObjectType
-  return fragmentNonNullTypedBundler {
+  return activityNonNullTypedBundlerValue {
     when {
       // references
       Bundle::class.java.isAssignableFrom(objectType) -> intent.getBundleExtra(key) as T
@@ -149,7 +151,7 @@ inline fun <reified T : Any> Fragment.bundleNonNull(
 /**
  * @author skydoves (Jaewoong Eum)
  *
- * Retrieves a references array type of extended data from arguments lazily.
+ * Retrieves a references array type of extended data from the Intent immediately.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -158,20 +160,26 @@ inline fun <reified T : Any> Fragment.bundleNonNull(
  */
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Fragment.bundleArray(
+inline fun <reified T : Any> Activity.bundleArrayValue(
   key: String,
   crossinline defaultValue: () -> Array<T>? = { null }
-): Lazy<Array<T>?> {
+): Array<T>? {
   val javaObjectType = T::class.javaObjectType
-  return fragmentArrayBundler(defaultValue) {
+  return activityArrayBundlerValue(defaultValue) {
     (
       when {
         String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayExtra(key)
-        CharSequence::class.java.isAssignableFrom(javaObjectType) -> intent.getCharSequenceArrayExtra(key)
-        Parcelable::class.java.isAssignableFrom(javaObjectType) -> intent.getParcelableArrayExtra(key)
+        CharSequence::class.java.isAssignableFrom(
+          javaObjectType
+        ) -> intent.getCharSequenceArrayExtra(key)
+        Parcelable::class.java.isAssignableFrom(javaObjectType) -> intent.getParcelableArrayExtra(
+          key
+        )
 
-        else -> throw IllegalArgumentException("Illegal value type $javaObjectType for key \"$key\"")
-      }
+        else -> throw IllegalArgumentException(
+          "Illegal value type $javaObjectType for key \"$key\""
+        )
+      } as? Array<*>
       )?.filterIsInstance<T>()?.toTypedArray()
   }
 }
@@ -179,7 +187,7 @@ inline fun <reified T : Any> Fragment.bundleArray(
 /**
  * @author skydoves (Jaewoong Eum)
  *
- * Retrieves a references array list type of extended data from arguments lazily.
+ * Retrieves a references array list type of extended data from the Intent immediately.
  *
  * @param key The name of the desired item.
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -188,12 +196,12 @@ inline fun <reified T : Any> Fragment.bundleArray(
  */
 @JvmSynthetic
 @InlineBundleDsl
-inline fun <reified T : Any> Fragment.bundleArrayList(
+inline fun <reified T : Any> Activity.bundleArrayListValue(
   key: String,
   crossinline defaultValue: () -> ArrayList<T>? = { null }
-): Lazy<ArrayList<T>?> {
+): ArrayList<T>? {
   val javaObjectType = T::class.javaObjectType
-  return fragmentArrayListBundler(defaultValue) {
+  return activityArrayListBundlerValue(defaultValue) {
     when {
       String::class.java.isAssignableFrom(javaObjectType) -> intent.getStringArrayListExtra(key)
       CharSequence::class.java.isAssignableFrom(
@@ -204,6 +212,6 @@ inline fun <reified T : Any> Fragment.bundleArrayList(
       ) -> intent.getParcelableArrayListExtra<Parcelable>(key)
 
       else -> throw IllegalArgumentException("Illegal value type $javaObjectType for key \"$key\"")
-    } as? ArrayList<T>
+    } as ArrayList<T>?
   }
 }

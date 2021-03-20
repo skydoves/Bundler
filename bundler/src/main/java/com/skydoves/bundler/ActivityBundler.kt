@@ -19,14 +19,18 @@ package com.skydoves.bundler
 import android.app.Activity
 
 /**
- * Returns an instance of a bundler that has the the Intent  of an Activity.
+ * @author skydoves (Jaewoong Eum)
+ *
+ * Returns an instance of a bundler that has the the Intent of an Activity.
  *
  * @throws NullPointerException when the Activity does not contain any Intent.
  */
 fun Activity.activityBundler(): Bundler = Bundler(intent)
 
 /**
- * Retrieves a primitive type of extended data from the Intent  lazily.
+ * @author skydoves (Jaewoong Eum)
+ *
+ * Retrieves a primitive type of extended data from the Intent lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
@@ -43,6 +47,24 @@ internal inline fun <reified T : Any> Activity.activityVariableBundler(
   }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
+ * Retrieves a primitive type of extended data from the Intent immediately.
+ *
+ * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
+ * @param initializer The initializer for providing an instance of the type parameter.
+ */
+@PublishedApi
+@JvmSynthetic
+@InlineBundleDsl
+internal inline fun <reified T : Any> Activity.activityVariableBundlerValue(
+  defaultValue: T,
+  crossinline initializer: Bundler.() -> T?
+): T = activityBundler().initializer() ?: defaultValue
+
+/**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references type of extended data from the Intent lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -60,7 +82,25 @@ internal inline fun <reified T : Any> Activity.activityTypedBundler(
   }
 
 /**
- * Retrieves a references type of extended data from the Intent  lazily.
+ * @author skydoves (Jaewoong Eum)
+ *
+ * Retrieves a references type of extended data from the Intent immediately.
+ *
+ * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
+ * @param initializer The initializer for providing an instance of the type parameter.
+ */
+@PublishedApi
+@JvmSynthetic
+@InlineBundleDsl
+internal inline fun <reified T : Any> Activity.activityTypedBundlerValue(
+  crossinline defaultValue: () -> T? = { null },
+  crossinline initializer: Bundler.() -> T?
+): T? = activityBundler().initializer() ?: defaultValue()
+
+/**
+ * @author skydoves (Jaewoong Eum)
+ *
+ * Retrieves a references type of extended data from the Intent lazily.
  *
  * @param initializer The initializer for providing a non-null instance of the type parameter.
  */
@@ -75,7 +115,23 @@ internal inline fun <reified T : Any> Activity.activityNonNullTypedBundler(
   }
 
 /**
- * Retrieves a references array type of extended data from the Intent  lazily.
+ * @author skydoves (Jaewoong Eum)
+ *
+ * Retrieves a references type of extended data from the Intent immediately.
+ *
+ * @param initializer The initializer for providing a non-null instance of the type parameter.
+ */
+@PublishedApi
+@JvmSynthetic
+@InlineBundleDsl
+internal inline fun <reified T : Any> Activity.activityNonNullTypedBundlerValue(
+  crossinline initializer: Bundler.() -> T
+): T = activityBundler().initializer()
+
+/**
+ * @author skydoves (Jaewoong Eum)
+ *
+ * Retrieves a references array type of extended data from the Intent lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
  * @param initializer The initializer for providing an instance of the type parameter.
@@ -92,6 +148,24 @@ internal inline fun <reified T : Any> Activity.activityArrayBundler(
   }
 
 /**
+ * @author skydoves (Jaewoong Eum)
+ *
+ * Retrieves a references array type of extended data from the Intent immediately.
+ *
+ * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
+ * @param initializer The initializer for providing an instance of the type parameter.
+ */
+@PublishedApi
+@JvmSynthetic
+@InlineBundleDsl
+internal inline fun <reified T : Any> Activity.activityArrayBundlerValue(
+  crossinline defaultValue: () -> Array<T>? = { null },
+  crossinline initializer: Bundler.() -> Array<T>?
+): Array<T>? = activityBundler().initializer() ?: defaultValue()
+
+/**
+ * @author skydoves (Jaewoong Eum)
+ *
  * Retrieves a references array list type of extended data from the Intent  lazily.
  *
  * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
@@ -107,3 +181,19 @@ internal inline fun <reified T : Any> Activity.activityArrayListBundler(
   lazy(LazyThreadSafetyMode.NONE) {
     activityBundler().initializer() ?: defaultValue()
   }
+
+/**
+ * @author skydoves (Jaewoong Eum)
+ *
+ * Retrieves a references array list type of extended data from the Intent  lazily.
+ *
+ * @param defaultValue The value to be returned if no value of the desired type is stored with the given name.
+ * @param initializer The initializer for providing an instance of the type parameter.
+ */
+@PublishedApi
+@JvmSynthetic
+@InlineBundleDsl
+internal inline fun <reified T : Any> Activity.activityArrayListBundlerValue(
+  crossinline defaultValue: () -> ArrayList<T>? = { null },
+  crossinline initializer: Bundler.() -> ArrayList<T>?
+): ArrayList<T>? = activityBundler().initializer() ?: defaultValue()

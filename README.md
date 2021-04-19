@@ -7,7 +7,7 @@
   <a href="https://androidweekly.net/issues/issue-439"><img alt="Android Weekly" src="https://skydoves.github.io/badges/android-weekly.svg"/></a>
   <a href="https://mailchi.mp/kotlinweekly/kotlin-weekly-225"><img alt="KotlinWeekly" src="https://skydoves.github.io/badges/kotlin-weekly.svg"/></a>
   <a href="https://skydoves.medium.com/clean-ways-to-handle-android-bundles-40af734bab3"><img alt="Medium" src="https://skydoves.github.io/badges/Story-Medium.svg"/></a>
-  <a href="https://skydoves.github.io/libraries/bundler/html/bundler/com.skydoves.bundler/index.html"><img alt="Javadoc" src="https://skydoves.github.io/badges/javadoc-bundler.svg"/></a>
+  <a href="https://skydoves.github.io/libraries/lazybones/html/lazybones/com.skydoves.lazybones/index.html"><img alt="Javadoc" src="https://skydoves.github.io/badges/javadoc-lazybones.svg"/></a>
 </p>
 
 <p align="center">
